@@ -127,9 +127,14 @@ def direct_generator_matrix(twice_j: int) -> Matrix:
                 tensor = tensor_operator(twice_j, k, q)
                 image += tensor * probe * tensor.conjugate().T
             image -= Rational(2 * k + 1, d) * probe
-            result[ell - 1, k - 1] = simplify(
-                (probe.conjugate().T * image).trace()
-            )
+            scalar = simplify((probe.conjugate().T * image).trace())
+            residual = (image - scalar * probe).applyfunc(simplify)
+            if residual != zeros(d):
+                raise AssertionError(
+                    f"direct Kraus image is not scalar on the probe for "
+                    f"twice_j={twice_j}, ell={ell}, k={k}:\n{residual}"
+                )
+            result[ell - 1, k - 1] = scalar
     return result
 
 
@@ -215,7 +220,7 @@ def main() -> None:
         print(f"primitive facet rows: {primitive_facet_rows(twice_j)}", flush=True)
         if args.verify:
             verify(twice_j)
-            print("exact tensor reconstruction: PASS", flush=True)
+            print("exact tensor reconstruction with full residuals: PASS", flush=True)
 
 
 if __name__ == "__main__":

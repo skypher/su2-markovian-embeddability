@@ -40,20 +40,29 @@ time-homogeneous generator exactly when every \(\eta_\ell>0\) and
 \]
 
 The paper gives explicit primitive facets for spins \(1\), \(3/2\),
-and \(2\), as well as the instantaneous version for invertible
-covariant CP-divisible paths.
+and \(2\).  An arbitrary invertible differentiable covariant path is
+CP-divisible exactly when
+
+\[
+(M^{(j)})^{-1}\frac{d}{dt}\log|\eta(t)|\geq0,
+\]
+
+where the absolute value is componentwise.  This includes fixed
+negative-spectrum branches; for paths beginning at the identity the
+absolute values may be omitted.
 
 ## Repository map
 
 - `paper/main.tex`: theorem statements, proofs, low-spin facets,
   geometry, and path criterion.
 - `paper/main.pdf`: compiled paper.
-- `code/exact_cones.py`: exact 3j/6j reconstruction and facet
-  generation.
+- `code/exact_cones.py`: exact 3j/6j reconstruction, full tensor-residual
+  checks, and facet generation.
 - `code/generate_plot_data.py`: rational polytope certificates and
   plotting data.
 - `paper/generated/geometry_exact.txt`: exact vertices, barycentric
-  coordinates, matrices, facets, and volumes.
+  coordinates, matrices, facets, boundary cycles, determinant terms, and
+  volumes.
 - `paper/generated/exact_check.txt`: saved direct-reconstruction
   transcript.
 - `ROADMAP.md`: theorem-slot acceptance ledger and source map.

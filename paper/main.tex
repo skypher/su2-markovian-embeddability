@@ -3,9 +3,17 @@
 \usepackage[a4paper,margin=1in]{geometry}
 \usepackage{amsmath,amssymb,amsthm,mathtools}
 \usepackage{bm}
+\usepackage{microtype}
 \usepackage[hidelinks]{hyperref}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
+\hypersetup{
+  pdftitle={Markovian Embeddability of SU(2)-Covariant Spin Channels},
+  pdfauthor={Anonymous},
+  pdfsubject={Covariant quantum Markov semigroups and channel embedding},
+  pdfkeywords={SU(2), quantum channels, GKSL generators, Markovian embedding,
+    Wigner 6j symbols, CP-divisibility}
+}
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
@@ -28,7 +36,7 @@
 \newcommand{\conv}{\operatorname{conv}}
 
 \title{Markovian Embeddability of \(SU(2)\)-Covariant Spin Channels}
-\author{}
+\author{Anonymous}
 \date{}
 
 \begin{document}
@@ -41,8 +49,9 @@ generators form a simplicial cone indexed by the nonzero tensor ranks.
 We compute the generator eigenvalue matrix in terms of Wigner \(6j\)
 symbols, give its closed inverse, and obtain logarithmic endpoint
 inequalities for spins \(1\), \(3/2\), and \(2\).  The same cone
-characterizes the instantaneous logarithmic derivative of an invertible
-differentiable covariant CP-divisible path.
+characterizes the instantaneous logarithmic derivative of the absolute
+tensor-sector eigenvalues along any invertible differentiable covariant
+CP-divisible path.
 \end{abstract}
 
 \section{Introduction}
@@ -62,12 +71,32 @@ the extreme points of the covariant-channel simplex
 \cite[Proposition~4.1]{AlNuwairan2014}.  The same vertices appear as
 Clebsch--Gordan channels in
 \cite[Sec.~2]{ChangKimKwakLeeYoun2022}, where low-rank entanglement and
-degradability questions are analyzed, in particular in Sec.~5.
+degradability questions are analyzed, in particular in Sec.~4.
+C{\^i}rstoiu, Korzekwa, and Jennings describe the simplex in Liouville
+coordinates and derive the action of its extremal channels on
+irreducible tensor operators
+\cite[Theorem~7 and Appendix~B]{CirstoiuKorzekwaJennings2020}.
 Aschieri, Ruba, and Solovej developed quantitative large-spin
 approximations and trace formulas for this simplex
 \cite[Sec.~1]{AschieriRubaSolovej2024}.  Recent work on Weyl dynamical
 maps gives semigroup and non-Markovianity criteria in a different
 covariant family \cite[Proposition~2]{XuJagadish2026}.
+Rudnicki, Klimov, Mu{\~n}oz, Leuchs, and S{\'a}nchez-Soto have also given a
+recent Choi--Kraus characterization of the static \(SU(2)\)-covariant
+channel family
+\cite[Abstract]{RudnickiKlimovMunozLeuchsSanchezSoto2026}.
+
+The continuous-time covariance principle predates the present
+specialization.  Holevo showed that the completely positive part in a
+standard representation of a norm-continuous covariant semigroup may
+be chosen covariant and its Hamiltonian may be chosen to commute with
+the symmetry representation \cite[Abstract]{Holevo1993}; the
+form-generator theory beyond norm continuity is developed in
+\cite[Abstract]{Holevo1995}.  In the finite-dimensional irreducible
+spin setting, the multiplicity-free adjoint decomposition resolves
+Holevo's covariant completely positive part into one scalar rate per
+tensor rank.  We include that specialization with the normalization
+needed for the embedding calculation.
 
 Here the symmetry is imposed on the continuous-time generator as well
 as on its endpoint.  Thus ``embeddable'' below means embeddable by an
@@ -82,8 +111,9 @@ noncovariant logarithm of the same endpoint.  The main results are:
  \((M^{(j)})^{-1}\log\bm\eta\geq0\) is necessary and sufficient for
  endpoint embeddability, yielding explicit facets through spin \(2\);
  \item the same inequalities applied to
- \(d(\log\bm\eta(t))/dt\) characterize invertible differentiable
- covariant CP-divisible paths.
+ \(d(\log|\bm\eta(t)|)/dt\) characterize all invertible differentiable
+ covariant CP-divisible paths, including paths on fixed negative-spectrum
+ branches.
 \end{enumerate}
 All low-spin matrices, intersections, and plotted meshes are generated
 by exact symbolic scripts included with the paper.
@@ -296,6 +326,12 @@ In particular, an invariant generator has no nonzero Hamiltonian part
 and is self-adjoint for the Hilbert--Schmidt inner product.
 \end{theorem}
 
+The covariance statement behind this decomposition is the
+finite-dimensional compact-group case of Holevo's standard-form result
+\cite[Abstract]{Holevo1993}.  The proof below identifies the unique
+tensor-rank coefficients in the convention
+\eqref{eq:tensor-orthogonality}.
+
 \begin{proof}
 Choose the tensors \(T_q^{(k)}\), \(1\leq k\leq2j\), as an orthonormal
 basis of the traceless operators.  The canonical finite-dimensional
@@ -342,7 +378,7 @@ the coefficients.  Finally, the adjoint relation in
 \eqref{eq:dissipator-simplified} is Hilbert--Schmidt self-adjoint.
 \end{proof}
 
-\section{The exact \(6j\)-symbol matrix}
+\section{The exact \texorpdfstring{\(6j\)}{6j}-symbol matrix}
 
 \begin{lemma}[Sector diagonalization and reality]
 \label{lem:sector-diagonalization}
@@ -1017,46 +1053,87 @@ The tangent-cone form of the finite-dimensional GKS theorem
 {GoriniKossakowskiSudarshan1976} says exactly that \(K_t\) is a GKSL
 generator.
 
-Conversely, if every \(K_t\) is a GKSL generator, the solution of
-\(\partial_tV_{t,s}=K_tV_{t,s}\), \(V_{s,s}=\id\), is the norm limit
-of products
+Conversely, suppose every \(K_t\) is a GKSL generator.  Put
+\(\Delta=(t-s)/n\).  The chronological Euler products
 \begin{equation*}
- \prod_{r=0}^{n-1}\exp\!\left(\frac{t-s}{n}
- K_{s+r(t-s)/n}\right).
+ V^{(n)}_{t,s}=
+ \exp(\Delta K_{s+(n-1)\Delta})\cdots
+ \exp(\Delta K_{s+\Delta})\exp(\Delta K_s)
+\end{equation*}
+converge in operator norm to the solution of
+\(\partial_tV_{t,s}=K_tV_{t,s}\), \(V_{s,s}=\id\).  Indeed, if
+\(B=\sup_{u\in[s,t]}\|K_u\|\) and
+\begin{equation*}
+ \omega_K(\delta)=
+ \sup_{\substack{u,v\in[s,t]\\|u-v|\leq\delta}}
+ \|K_u-K_v\|,
+\end{equation*}
+then variation of constants between the exact solution and the
+piecewise-constant evolution gives
+\begin{equation*}
+ \|V_{t,s}-V^{(n)}_{t,s}\|
+ \leq (t-s)e^{B(t-s)}\omega_K(\Delta)\longrightarrow0.
 \end{equation*}
 Every factor is a channel, and the cone of completely positive maps
-and the trace-preserving affine subspace are norm closed.  Hence
-\(V_{t,s}\) is a channel and \(\Phi_t=V_{t,s}\Phi_s\).
+and the trace-preserving affine subspace are operator-norm closed.
+Hence \(V_{t,s}\) is a channel.  Finally, both \(\Phi_t\) and
+\(V_{t,s}\Phi_s\) solve \(\dot Y_t=K_tY_t\) with initial value
+\(Y_s=\Phi_s\); uniqueness for finite-dimensional linear ODEs gives
+\(\Phi_t=V_{t,s}\Phi_s\).
 \end{proof}
 
 \begin{theorem}[Instantaneous logarithmic cone]
 \label{thm:path-criterion}
 Let \(t\mapsto\Phi_t\) be an invertible \(C^1\) path of
-\(\SU\)-covariant channels whose tensor-sector eigenvalues
-\(\eta_\ell(t)\) are positive.  Then the path is CP-divisible if and
-only if
+\(\SU\)-covariant channels, with tensor-sector eigenvalues
+\(\eta_\ell(t)\).  Then the path is CP-divisible if and only if
 \begin{equation}\label{eq:path-cone}
  (M^{(j)})^{-1}\frac{d}{dt}
  \begin{pmatrix}
- \log\eta_1(t)\\ \vdots\\ \log\eta_{2j}(t)
+ \log|\eta_1(t)|\\ \vdots\\ \log|\eta_{2j}(t)|
  \end{pmatrix}
  \in\Rplus^{2j}
  \quad\text{for every }t.
 \end{equation}
+If \(\Phi_{t_0}=\id\) at some \(t_0\), then every
+\(\eta_\ell(t)>0\) and the absolute values may be omitted.
 \end{theorem}
 
 \begin{proof}
+Lemma~\ref{lem:sector-diagonalization} makes every \(\eta_\ell(t)\)
+real, while invertibility makes it nonzero.  Since the parameter set is
+an interval, continuity makes the sign of each \(\eta_\ell\) constant.
+At an identity point all these signs are positive.
 Both \(\dot\Phi_t\) and \(\Phi_t^{-1}\) commute with every
 \(\cU_g\), so the time-local generator \(K_t\) in
 \eqref{eq:time-local-generator} is covariant.  On \(V_\ell\) it acts
 by
 \begin{equation*}
  \frac{\dot\eta_\ell(t)}{\eta_\ell(t)}
- =\frac{d}{dt}\log\eta_\ell(t).
+ =\frac{d}{dt}\log|\eta_\ell(t)|.
 \end{equation*}
 Apply Lemma~\ref{lem:local-divisibility}, then
 Theorems~\ref{thm:generator-classification} and
 \ref{thm:eigenmatrix}.
+\end{proof}
+
+\begin{corollary}[Spin-\(1/2\) negative-spectrum branches]
+\label{cor:negative-spectrum-paths}
+Let \(t\mapsto\Phi_t\) be an invertible \(C^1\) path of spin-\(1/2\)
+covariant channels.  Then it is CP-divisible if and only if
+\begin{equation*}
+ \frac{d}{dt}\log|\eta_1(t)|\leq0.
+\end{equation*}
+In particular, the constant path at the nonidentity vertex
+\(\eta_1=-1/3\) is invertible and CP-divisible.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:spin-one-half} gives
+\((M^{(1/2)})^{-1}=-1/2\), so Theorem~\ref{thm:path-criterion}
+reduces to the displayed inequality.  The constant vertex path has
+zero logarithmic derivative, and its propagators are the identity
+channel.
 \end{proof}
 
 \section{Exact computation and reproducibility}
@@ -1069,9 +1146,8 @@ table lookup.
 
 \begin{proposition}[Exact reconstruction protocol]
 \label{prop:exact-reconstruction}
-For \(2j=1,2,3,4\), the script
-\texttt{code/exact\_cones.py} performs all of the following operations
-in symbolic arithmetic:
+For \(2j=1,2,3,4\), the repository's exact-cone script performs all of
+the following operations in symbolic arithmetic:
 \begin{enumerate}
  \item constructs every \(T_q^{(k)}\) once from Clebsch--Gordan
  coefficients and once from the \(3j\) formula
@@ -1079,8 +1155,9 @@ in symbolic arithmetic:
  \item constructs the matrix of \(\beta\) in
  \eqref{eq:dual-intertwiner}, tests its unitarity, and tests
  \eqref{eq:dual-tensor-phase} for every \(k,q\);
- \item applies every Kraus sum directly to \(T_0^{(\ell)}\) and tests
- that the resulting matrix equals \eqref{eq:M-definition};
+ \item applies every Kraus sum directly to \(T_0^{(\ell)}\), tests that
+ its residual after projection onto \(T_0^{(\ell)}\) vanishes, and
+ tests that the extracted scalar equals \eqref{eq:M-definition};
  \item tests \eqref{eq:M-from-vertices}, the closed inverse
  \eqref{eq:M-inverse-formula}, and
  \(|\det M^{(j)}|=2j+1\).
@@ -1093,9 +1170,12 @@ normals in the spin-\(1\), spin-\(3/2\), and spin-\(2\) corollaries.
 The tensor and Wigner routines return SymPy algebraic numbers, and the
 tests use exact matrix equality after symbolic simplification.  The
 direct Kraus reconstruction does not call the \(6j\)-based generator
-routine.  Thus items 1--3 compare the two derivations entry by entry;
-item 4 substitutes the resulting matrices into the displayed algebraic
-identities.  The executable check is
+routine.  For each \((\ell,k)\), it first checks the matrix identity
+\(\cD_k(T_0^{(\ell)})=m_{\ell k}T_0^{(\ell)}\), including the full
+residual, and then compares \(m_{\ell k}\) with
+\eqref{eq:M-definition}.  Thus items 1--3 compare the two derivations
+entry by entry; item 4 substitutes the resulting matrices into the
+displayed algebraic identities.  The executable check is
 \begin{equation*}
  \texttt{python3 -u code/exact\_cones.py 1 2 3 4 --verify}.
 \end{equation*}
@@ -1120,8 +1200,12 @@ ambient dimension.  A polytope vertex occurs in at least one full-rank
 choice.  The script iterates over all choices, discards singular systems,
 solves the rest over \(\mathbb Q\), and retains exactly the points that
 satisfy every halfspace.  It then computes barycentric coordinates by
-the inverse augmented vertex matrix.  This is the active-set argument
-used in Proposition~\ref{prop:comparison-polytopes}.
+the inverse augmented vertex matrix.  Boundary cycles are ordered by
+exact signs of rational planar cross products.  The certificate records
+those cycles and every rational determinant term in the shoelace and
+pyramid sums, so no floating-point decision enters a stated area or
+volume.  This is the active-set argument used in
+Proposition~\ref{prop:comparison-polytopes}.
 \end{proof}
 
 From the repository root, \texttt{make check} runs the exact tensor
@@ -1137,7 +1221,8 @@ then converts those rates to sector decay exponents by the matrix
 closed inverse \eqref{eq:M-inverse-formula}.  Endpoint embedding is
 therefore a finite set of linear inequalities in logarithmic
 eigenvalues, and time-dependent CP-divisibility is the pointwise version
-of the same test.  The low-spin corollaries and comparison plots make
+of the same test applied to logarithms of absolute sector eigenvalues.
+The low-spin corollaries and comparison plots make
 the distinction between complete positivity, positive spectrum, and
 covariant Markovian embeddability explicit.
 

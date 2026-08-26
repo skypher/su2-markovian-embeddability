@@ -115,6 +115,17 @@ def dual_intertwiner(twice_j: int) -> Matrix:
     return beta
 
 
+def column_vectorize(matrix: Matrix) -> Matrix:
+    """Vectorization in the paper's output--dual-input tensor order."""
+    rows = matrix.rows
+    columns = matrix.cols
+    return Matrix(
+        rows * columns,
+        1,
+        lambda index, _column: matrix[index // columns, index % columns],
+    )
+
+
 def direct_generator_matrix(twice_j: int) -> Matrix:
     """Compute M directly from exact tensor matrices, without a 6j symbol."""
     d = twice_j + 1
@@ -151,12 +162,15 @@ def primitive_facet_rows(twice_j: int) -> list[list[int]]:
 
 
 def verify(twice_j: int) -> None:
+    d = twice_j + 1
     beta = dual_intertwiner(twice_j)
-    if beta * beta.conjugate().T != Matrix.eye(twice_j + 1):
+    if beta * beta.conjugate().T != Matrix.eye(d):
         raise AssertionError(f"dual intertwiner is not unitary for twice_j={twice_j}")
+    tensors: dict[tuple[int, int], Matrix] = {}
     for k in range(twice_j + 1):
         for q in range(-k, k + 1):
             tensor = tensor_operator(twice_j, k, q)
+            tensors[k, q] = tensor
             tensor_3j = tensor_operator_3j(twice_j, k, q)
             if tensor != tensor_3j:
                 raise AssertionError(
@@ -169,6 +183,35 @@ def verify(twice_j: int) -> None:
                     f"dual tensor phase failed for "
                     f"twice_j={twice_j}, k={k}, q={q}"
                 )
+
+    tensor_labels = list(tensors)
+    tensor_gram = Matrix(
+        d * d,
+        d * d,
+        lambda row, column: simplify(
+            (
+                tensors[tensor_labels[row]].conjugate().T
+                * tensors[tensor_labels[column]]
+            ).trace()
+        ),
+    )
+    if tensor_gram != Matrix.eye(d * d):
+        raise AssertionError(
+            f"tensor basis is not Hilbert--Schmidt orthonormal for "
+            f"twice_j={twice_j}"
+        )
+
+    for k in range(twice_j + 1):
+        scalar_sum = zeros(d)
+        for q in range(-k, k + 1):
+            tensor = tensors[k, q]
+            scalar_sum += tensor.conjugate().T * tensor
+        expected_sum = Rational(2 * k + 1, d) * Matrix.eye(d)
+        if (scalar_sum - expected_sum).applyfunc(simplify) != zeros(d):
+            raise AssertionError(
+                f"scalar Kraus sum failed for twice_j={twice_j}, k={k}"
+            )
+
     formula = generator_matrix(twice_j)
     direct = direct_generator_matrix(twice_j)
     if formula != direct:
@@ -176,6 +219,76 @@ def verify(twice_j: int) -> None:
             f"6j and tensor definitions disagree for twice_j={twice_j}:\n"
             f"formula={formula}\ndirect={direct}"
         )
+
+    for ell in range(twice_j + 1):
+        for m in range(-ell, ell + 1):
+            probe = tensors[ell, m]
+            for k in range(1, twice_j + 1):
+                image = zeros(d)
+                for q in range(-k, k + 1):
+                    tensor = tensors[k, q]
+                    image += tensor * probe * tensor.conjugate().T
+                image -= Rational(2 * k + 1, d) * probe
+                scalar = 0 if ell == 0 else formula[ell - 1, k - 1]
+                residual = (image - scalar * probe).applyfunc(simplify)
+                if residual != zeros(d):
+                    raise AssertionError(
+                        f"full tensor residual failed for twice_j={twice_j}, "
+                        f"ell={ell}, m={m}, k={k}:\n{residual}"
+                    )
+
+    for k in range(twice_j + 1):
+        projector = zeros(d * d)
+        choi_direct = zeros(d * d)
+        for q in range(-k, k + 1):
+            tensor = tensors[k, q]
+            vector = column_vectorize(tensor)
+            projector += vector * vector.conjugate().T
+        for a in range(d):
+            for b in range(d):
+                matrix_unit = zeros(d)
+                matrix_unit[a, b] = 1
+                output = zeros(d)
+                for q in range(-k, k + 1):
+                    tensor = tensors[k, q]
+                    output += tensor * matrix_unit * tensor.conjugate().T
+                output *= Rational(d, 2 * k + 1)
+                for row in range(d):
+                    for column in range(d):
+                        choi_direct[row * d + a, column * d + b] = output[
+                            row, column
+                        ]
+        if (projector * projector - projector).applyfunc(simplify) != zeros(
+            d * d
+        ):
+            raise AssertionError(
+                f"Choi support is not a projector for twice_j={twice_j}, k={k}"
+            )
+        choi_projector = Rational(d, 2 * k + 1) * projector
+        if (choi_direct - choi_projector).applyfunc(simplify) != zeros(d * d):
+            raise AssertionError(
+                f"direct and projector Choi matrices disagree for "
+                f"twice_j={twice_j}, k={k}"
+            )
+        if simplify(choi_direct.trace()) != d:
+            raise AssertionError(
+                f"Choi trace normalization failed for twice_j={twice_j}, k={k}"
+            )
+        output_partial_trace = Matrix(
+            d,
+            d,
+            lambda a, b: simplify(
+                sum(
+                    choi_direct[output * d + a, output * d + b]
+                    for output in range(d)
+                )
+            ),
+        )
+        if output_partial_trace != Matrix.eye(d):
+            raise AssertionError(
+                f"trace preservation failed for twice_j={twice_j}, k={k}"
+            )
+
     inverse_formula = inverse_generator_matrix(twice_j)
     if formula * inverse_formula != Matrix.eye(twice_j):
         raise AssertionError(
@@ -193,6 +306,15 @@ def verify(twice_j: int) -> None:
         )
         if formula[:, k0] != expected:
             raise AssertionError(f"vertex relation failed for k={k}")
+    column_decays = [
+        simplify(-sum(formula[ell, k] for ell in range(twice_j)))
+        for k in range(twice_j)
+    ]
+    if column_decays != [2 * k for k in range(1, twice_j + 1)]:
+        raise AssertionError(
+            f"column-decay identity failed for twice_j={twice_j}: "
+            f"{column_decays}"
+        )
 
 
 def main() -> None:
@@ -220,7 +342,10 @@ def main() -> None:
         print(f"primitive facet rows: {primitive_facet_rows(twice_j)}", flush=True)
         if args.verify:
             verify(twice_j)
-            print("exact tensor reconstruction with full residuals: PASS", flush=True)
+            print(
+                "exact every-m tensor reconstruction and Choi checks: PASS",
+                flush=True,
+            )
 
 
 if __name__ == "__main__":

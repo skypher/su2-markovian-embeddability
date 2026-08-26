@@ -115,8 +115,15 @@ noncovariant logarithm of the same endpoint.  The main results are:
  covariant CP-divisible paths, including paths on fixed negative-spectrum
  branches.
 \end{enumerate}
-All low-spin matrices, intersections, and plotted meshes are generated
-by exact symbolic scripts included with the paper.
+The static channel simplex and the general covariant standard form are
+the starting points supplied by the cited literature.  The present
+contribution identifies their common tensor normalization, derives the
+closed inverse and determinant of the generator eigenmatrix, determines
+the exponential endpoint cone and its low-spin facets, and proves the
+fixed-sign CP-divisibility criterion.  It also gives exact volume and
+polytope certificates.  All displayed low-spin matrices and polytope
+intersections have exact symbolic certificates; floating-point values
+are used only to render sampled boundary curves and meshes.
 
 \section{Tensor conventions and covariant channels}
 
@@ -132,6 +139,11 @@ The Clebsch--Gordan decomposition is multiplicity free:
   B(\mathcal H_j)\cong \mathcal H_j\otimes\mathcal H_j^*
   \cong \bigoplus_{\ell=0}^{2j}V_\ell.
 \end{equation}
+When \(j=0\), the algebra is \(\mathbb C\), the only channel is the
+identity, and the only trace-preserving generator is zero.  All matrix
+and inequality statements below then have empty index sets.  We retain
+this case in the general statements and focus the nontrivial formulas on
+\(j>0\).
 
 We use the Hilbert--Schmidt orthonormal spherical tensors of
 Breuer~\cite[Appendix A, Eqs.~(A1)--(A6)]{Breuer2005}.  In the angular
@@ -322,8 +334,8 @@ there are unique numbers \(\gamma_1,\ldots,\gamma_{2j}\geq0\) such that
 \begin{equation}\label{eq:generator-cone}
  \cL=\sum_{k=1}^{2j}\gamma_k\cD_k.
 \end{equation}
-In particular, an invariant generator has no nonzero Hamiltonian part
-and is self-adjoint for the Hilbert--Schmidt inner product.
+In particular, its canonical traceless GKS Hamiltonian is zero, and the
+generator is self-adjoint for the Hilbert--Schmidt inner product.
 \end{theorem}
 
 The covariance statement behind this decomposition is the
@@ -429,11 +441,23 @@ invariant unitary
  \beta:\mathcal H_j^*\longrightarrow\mathcal H_j,\qquad
  \beta\langle j,m|=(-1)^{j-m}|j,-m\rangle .
 \end{equation}
-For column vectorization into
-\(\mathcal H_j\otimes\mathcal H_j^*\), the Kraus map in
-\eqref{eq:kraus-recoupling} is represented by
-\(\sum_qT_q^{(k)}\otimes\overline{T_q^{(k)}}\).  The tensors are real,
-and Breuer's Eq.~(A6) states
+Fix column vectorization by
+\begin{equation}\label{eq:column-vectorization}
+ \operatorname{vec}(|j,m_1\rangle\langle j,m_2|)
+ =|j,m_1\rangle\otimes\langle j,m_2|.
+\end{equation}
+It satisfies
+\(\operatorname{vec}(AXB^\dagger)
+=(A\otimes\overline B)\operatorname{vec}(X)\).  Hence the Kraus map in
+\eqref{eq:kraus-recoupling} is represented on
+\(\mathcal H_j\otimes\mathcal H_j^*\) by
+\(\sum_qT_q^{(k)}\otimes\overline{T_q^{(k)}}\).
+
+In the angular-momentum basis and its dual, the matrix of \(\beta\) is
+the matrix \(V\) of the rotation by \(\pi\) about the \(y\)-axis in
+\cite[Eq.~(3.10)]{Breuer2005}, up to an overall phase which cancels
+under conjugation.  The tensors are real, and
+\cite[Eq.~(A6)]{Breuer2005} therefore states
 \(\beta(T_q^{(k)})^{\mathsf T}\beta^\dagger=(-1)^kT_q^{(k)}\).
 Taking adjoints gives
 \begin{equation}\label{eq:dual-tensor-phase}
@@ -447,7 +471,15 @@ the Kraus map is \((-1)^kQ_k\), where
 \end{equation*}
 is exactly Breuer's invariant tensor
 \cite[Eq.~(2.7)]{Breuer2005}.  Let \(P_\ell\) be the projector onto
-the coupled spin-\(\ell\) summand.  It follows that
+the coupled spin-\(\ell\) summand of
+\(\mathcal H_j\otimes\mathcal H_j\).  The unitary
+\(I\otimes\beta\) is an \(\SU\)-intertwiner.  By
+\eqref{eq:tensor-transform}, it maps
+\(\operatorname{span}\{\operatorname{vec}(T_m^{(\ell)}):
+{}-\ell\leq m\leq\ell\}\)
+onto a spin-\(\ell\) summand; multiplicity one identifies its image
+with \(P_\ell\mathopen{}(\mathcal H_j\otimes\mathcal H_j)\).  Taking
+the trace on that \((2\ell+1)\)-dimensional summand therefore gives
 \begin{equation}\label{eq:a-from-QP}
  a_{\ell k}=(-1)^k\frac{\Tr(Q_kP_\ell)}{2\ell+1}.
 \end{equation}
@@ -707,8 +739,8 @@ For \(j=1/2\), the covariant-channel interval is
  r_1=-\frac12\log\eta_1.
 \end{equation}
 Consequently a spin-\(1/2\) covariant channel is covariantly
-embeddable if and only if \(0<\eta_1\leq1\).  Thus every
-positive-spectrum channel in this one-dimensional simplex is
+embeddable if and only if \(0<\eta_1\leq1\).  Thus every channel in
+this one-dimensional simplex with strictly positive sector spectrum is
 embeddable.
 \end{corollary}
 
@@ -888,7 +920,7 @@ Corollary~\ref{cor:cp-halfspaces} proves the claim.
 
 \begin{proposition}[Exact comparison polytopes]\label{prop:comparison-polytopes}
 In tensor-eigenvalue coordinates, the spin-\(1\) covariant-channel
-simplex and its positive-spectrum part are
+simplex and its nonnegative-spectrum part are
 \begin{align}
  \mathsf S_1
  &=\conv\left\{
@@ -909,7 +941,7 @@ For spin \(3/2\), the full simplex is
  &\left(-\tfrac35,\tfrac15,-\tfrac1{35}\right)\},
 \end{split}
 \end{equation}
-and its positive-spectrum part has the eight vertices
+and its nonnegative-spectrum part has the eight vertices
 \begin{equation}\label{eq:spin-three-positive-polytope}
 \begin{split}
  (0,0,0),\quad
@@ -928,7 +960,7 @@ and its positive-spectrum part has the eight vertices
 Substitution of \(j=1\) and \(j=3/2\) in
 \eqref{eq:vertex-eigenvalues} gives
 \eqref{eq:spin-one-simplex} and \eqref{eq:spin-three-simplex}.
-For the positive-spectrum intersections, write a point as
+For the nonnegative-spectrum intersections, write a point as
 \(\eta=V\lambda\), where the columns of \(V\) are the displayed
 simplex vertices and \(\lambda_k\geq0\), \(\sum_k\lambda_k=1\).
 A vertex of the intersection with \(\eta_\ell\geq0\) is the unique
@@ -947,13 +979,15 @@ active sets proves that there are no further vertices.
 Let \(n=2j\), let \(\mathsf M_j\subset\mathbb R^n\) be the set of
 covariantly embeddable sector spectra, and define
 \begin{equation}\label{eq:column-decays}
- c_k=-\sum_{\ell=1}^nM^{(j)}_{\ell k}>0.
+ c_k=-\sum_{\ell=1}^nM^{(j)}_{\ell k}=2k,
+ \qquad 1\leq k\leq n.
 \end{equation}
 With respect to Lebesgue measure in the fixed sector-eigenvalue
 coordinates,
 \begin{equation}\label{eq:general-embeddable-volume}
  \operatorname{vol}_n(\mathsf M_j)
- =\frac{2j+1}{\prod_{k=1}^nc_k}.
+ =\frac{2j+1}{\prod_{k=1}^nc_k}
+ =\frac{2j+1}{2^n n!}.
 \end{equation}
 For spins \(1\), \(3/2\), and \(2\), the column-decay vectors and
 volumes are
@@ -972,13 +1006,43 @@ Moreover,
  \operatorname{vol}_3(\mathsf S_{3/2})&=\frac{128}{315},
  &\operatorname{vol}_3(\mathsf S_{3/2}^+)&=\frac{25}{126}.   \label{eq:spin-three-comparison-volumes}
 \end{align}
-Thus the embeddable fractions of the positive-spectrum regions are
+Thus the embeddable fractions of the nonnegative-spectrum regions are
 \(45/64\) for spin \(1\) and \(21/50\) for spin \(3/2\); the fractions
 of the full channel simplices are \(5/12\) and \(105/512\),
 respectively.
 \end{proposition}
 
 \begin{proof}
+Let \(\Delta_j\subset B(\mathcal H_j)\) be the \(d\)-dimensional
+subspace of matrices diagonal in the angular-momentum basis.  The
+selection rule in \eqref{eq:tensor-definition} says that
+\(T_q^{(k)}\) has a diagonal entry only when \(q=0\).  Hence the Kraus
+map
+\begin{equation*}
+ S_k(X)=\sum_{q=-k}^kT_q^{(k)}X(T_q^{(k)})^\dagger
+\end{equation*}
+preserves \(\Delta_j\).  In the orthonormal diagonal matrix-unit basis,
+its restricted superoperator trace is
+\begin{equation*}
+ \Tr(S_k|_{\Delta_j})
+ =\sum_{m=-j}^j\sum_{q=-k}^k
+   |\langle j,m|T_q^{(k)}|j,m\rangle|^2
+ =\sum_{m=-j}^j|\langle j,m|T_0^{(k)}|j,m\rangle|^2
+ =1,
+\end{equation*}
+where the last equality is the Hilbert--Schmidt normalization of
+\(T_0^{(k)}\).  The scalar term in
+\eqref{eq:dissipator-simplified} has restricted trace \(2k+1\), so
+\begin{equation}\label{eq:diagonal-dissipator-trace}
+ \Tr(\cD_k|_{\Delta_j})=-2k.
+\end{equation}
+The operators \(T_0^{(\ell)}\), \(0\leq\ell\leq n\), form an
+orthonormal eigenbasis of \(\Delta_j\).  The eigenvalue for \(\ell=0\)
+is zero and the remaining eigenvalues are
+\(M^{(j)}_{\ell k}\).  Comparing their sum with
+\eqref{eq:diagonal-dissipator-trace} proves
+\eqref{eq:column-decays}.
+
 By Theorem~\ref{thm:endpoint-criterion}, the map
 \begin{equation*}
  F:\mathbb R_{\geq0}^n\longrightarrow\mathsf M_j,\qquad
@@ -989,23 +1053,29 @@ interior its Jacobian is
 \begin{equation*}
  DF(r)=\operatorname{diag}(F(r))M^{(j)}.
 \end{equation*}
-Lemma~\ref{lem:dirichlet-form} makes every entry of \(M^{(j)}\)
-nonpositive, and invertibility rules out a zero column, so every
-\(c_k\) in \eqref{eq:column-decays} is positive.  Equations
-\eqref{eq:M-determinant-magnitude} and
+Equations \eqref{eq:M-determinant-magnitude} and
 \eqref{eq:column-decays} give
 \begin{equation*}
  |\det DF(r)|
  =(2j+1)\exp\left(-\sum_{k=1}^nc_kr_k\right).
 \end{equation*}
-Integrating this product over \(\mathbb R_{\geq0}^n\) proves
+The boundary of the orthant is the finite union of its coordinate
+hyperplanes.  On its intersection with every compact box, \(F\) is
+Lipschitz, so the image of each such \((n-1)\)-dimensional piece has
+zero \(n\)-dimensional measure; a countable exhaustion by boxes shows
+that the entire boundary image is null.  Thus the
+change-of-variables theorem on the interior loses no volume.
+Integrating this product over
+\(\mathbb R_{\geq0}^n\), and using
+\(\prod_{k=1}^n2k=2^n n!\), proves
 \eqref{eq:general-embeddable-volume}.
 
-Summing the columns of the low-spin matrices gives
+Specializing \eqref{eq:column-decays} gives
 \eqref{eq:low-spin-embeddable-volumes}.  The first entries in
 \eqref{eq:spin-one-comparison-volumes} and
 \eqref{eq:spin-three-comparison-volumes} are simplex determinants.
-The spin-\(1\) positive area follows from the shoelace formula applied
+The spin-\(1\) nonnegative-spectrum area follows from the shoelace
+formula applied
 to \eqref{eq:spin-one-positive-polytope}.  Triangulating each exact
 face in \eqref{eq:spin-three-positive-polytope} from an interior point
 gives \(25/126\); the rational active-set script records the same
@@ -1048,10 +1118,30 @@ If the path is CP-divisible, invertibility makes the propagator unique:
 \begin{equation*}
  V_{t+h,t}=\id+hK_t+o(h).
 \end{equation*}
-The tangent-cone form of the finite-dimensional GKS theorem
-\cite[Theorem~2.2 and its conditional-complete-positivity proof]
-{GoriniKossakowskiSudarshan1976} says exactly that \(K_t\) is a GKSL
-generator.
+Let \(\Omega=\sum_{a=1}^d e_a\otimes e_a\), use the unnormalized
+Choi convention \(J(A)=\sum_{a,b}A(|e_a\rangle\langle e_b|)\otimes
+|e_a\rangle\langle e_b|\), and take
+\(\psi\perp\Omega\).  Since \(J(V_{t+h,t})\geq0\),
+\begin{equation}\label{eq:choi-tangent-condition}
+ 0\leq \langle\psi,J(V_{t+h,t})\psi\rangle
+ =h\langle\psi,J(K_t)\psi\rangle+o(h).
+\end{equation}
+Division by \(h>0\) and passage to the limit show that
+\(J(K_t)\) is nonnegative on \(\Omega^\perp\).  Differentiating the
+trace-preserving and Hermiticity-preserving identities for
+\(V_{t+h,t}\) gives
+\begin{equation*}
+ \Tr K_t(X)=0,
+ \qquad K_t(X^\dagger)=K_t(X)^\dagger.
+\end{equation*}
+Thus \(K_t\) is conditionally completely positive and conservative.
+The conditional-complete-positivity construction in the proof of the
+finite-dimensional GKS theorem
+\cite[Theorem~2.2]{GoriniKossakowskiSudarshan1976} gives its GKSL
+form.  At a right endpoint of \(I\), the same conclusion follows by
+continuity of \(K_t\): the two linear identities above persist, and so
+does positivity of the compressed Choi matrix because the
+positive-semidefinite matrix cone is closed.
 
 Conversely, suppose every \(K_t\) is a GKSL generator.  Put
 \(\Delta=(t-s)/n\).  The chronological Euler products
@@ -1151,16 +1241,24 @@ the following operations in symbolic arithmetic:
 \begin{enumerate}
  \item constructs every \(T_q^{(k)}\) once from Clebsch--Gordan
  coefficients and once from the \(3j\) formula
- \eqref{eq:tensor-definition}, and tests entrywise equality;
+ \eqref{eq:tensor-definition}, tests entrywise equality and the full
+ Hilbert--Schmidt Gram matrix, and verifies
+ \(\sum_q(T_q^{(k)})^\dagger T_q^{(k)}=(2k+1)I/d\);
  \item constructs the matrix of \(\beta\) in
  \eqref{eq:dual-intertwiner}, tests its unitarity, and tests
  \eqref{eq:dual-tensor-phase} for every \(k,q\);
- \item applies every Kraus sum directly to \(T_0^{(\ell)}\), tests that
- its residual after projection onto \(T_0^{(\ell)}\) vanishes, and
- tests that the extracted scalar equals \eqref{eq:M-definition};
+ \item verifies \(\cD_k(I)=0\), applies every Kraus sum directly to
+ every \(T_m^{(\ell)}\) with \(1\leq\ell\leq2j\), and tests the full
+ matrix identity
+ \(\cD_k(T_m^{(\ell)})=M^{(j)}_{\ell k}T_m^{(\ell)}\), and compares
+ its scalar with \eqref{eq:M-definition};
+ \item constructs each \(J(\cE_k)\) independently from matrix units
+ and from the tensor vectorizations, tests
+ \(J(\cE_k)=dP_k/(2k+1)\), \(P_k^2=P_k\),
+ \(\Tr J(\cE_k)=d\), and trace preservation;
  \item tests \eqref{eq:M-from-vertices}, the closed inverse
- \eqref{eq:M-inverse-formula}, and
- \(|\det M^{(j)}|=2j+1\).
+ \eqref{eq:M-inverse-formula}, \(|\det M^{(j)}|=2j+1\), and the
+ general column identity \(-\sum_\ell M^{(j)}_{\ell k}=2k\).
 \end{enumerate}
 The primitive integer rows printed by the script are exactly the facet
 normals in the spin-\(1\), spin-\(3/2\), and spin-\(2\) corollaries.
@@ -1170,12 +1268,12 @@ normals in the spin-\(1\), spin-\(3/2\), and spin-\(2\) corollaries.
 The tensor and Wigner routines return SymPy algebraic numbers, and the
 tests use exact matrix equality after symbolic simplification.  The
 direct Kraus reconstruction does not call the \(6j\)-based generator
-routine.  For each \((\ell,k)\), it first checks the matrix identity
-\(\cD_k(T_0^{(\ell)})=m_{\ell k}T_0^{(\ell)}\), including the full
-residual, and then compares \(m_{\ell k}\) with
-\eqref{eq:M-definition}.  Thus items 1--3 compare the two derivations
-entry by entry; item 4 substitutes the resulting matrices into the
-displayed algebraic identities.  The executable check is
+routine.  For every \((\ell,m,k)\), it checks the complete matrix
+residual and then compares the scalar with \eqref{eq:M-definition}.
+The Choi matrix-unit loop is separate from its vectorized-projector
+construction.  Thus items 1--4 compare independent constructions entry
+by entry; item 5 substitutes the resulting matrices into the displayed
+algebraic identities.  The executable check is
 \begin{equation*}
  \texttt{python3 -u code/exact\_cones.py 1 2 3 4 --verify}.
 \end{equation*}
@@ -1222,9 +1320,9 @@ closed inverse \eqref{eq:M-inverse-formula}.  Endpoint embedding is
 therefore a finite set of linear inequalities in logarithmic
 eigenvalues, and time-dependent CP-divisibility is the pointwise version
 of the same test applied to logarithms of absolute sector eigenvalues.
-The low-spin corollaries and comparison plots make
-the distinction between complete positivity, positive spectrum, and
-covariant Markovian embeddability explicit.
+The low-spin corollaries and comparison plots make the distinction
+between complete positivity, sectorwise nonnegativity, and covariant
+Markovian embeddability explicit.
 
 \bibliographystyle{plain}
 \bibliography{references}

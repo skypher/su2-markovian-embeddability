@@ -51,13 +51,20 @@ where the absolute value is componentwise.  This includes fixed
 negative-spectrum branches; for paths beginning at the identity the
 absolute values may be omitted.
 
+In \(n=2j\) sector-eigenvalue coordinates, the embeddable region has
+the exact Euclidean volume
+
+\[
+\operatorname{vol}_n=\frac{2j+1}{2^n n!}.
+\]
+
 ## Repository map
 
 - `paper/main.tex`: theorem statements, proofs, low-spin facets,
   geometry, and path criterion.
 - `paper/main.pdf`: compiled paper.
-- `code/exact_cones.py`: exact 3j/6j reconstruction, full tensor-residual
-  checks, and facet generation.
+- `code/exact_cones.py`: exact 3j/6j reconstruction, every-component
+  tensor residuals, Choi normalization checks, and facet generation.
 - `code/generate_plot_data.py`: rational polytope certificates and
   plotting data.
 - `paper/generated/geometry_exact.txt`: exact vertices, barycentric
@@ -72,11 +79,19 @@ absolute values may be omitted.
 From the repository root:
 
 ```sh
+python3 -m venv .venv
+. .venv/bin/activate
+python3 -m pip install -r requirements.txt
 make check
 make figures
 make paper
 ```
 
 `make check` reconstructs the generator matrices directly from tensor
-operators and compares them with the 6j formulas for
+operators, checks every magnetic component and each normalized Choi
+projector, and compares the results with the 6j formulas for
 \(2j=1,2,3,4\).  All Python entry points use unbuffered output.
+
+The checked environment is Python 3.12.3, SymPy 1.12, mpmath 1.2.1,
+and TeX Live 2023 with PGFPlots compatibility level 1.18.  The Python
+package versions are pinned in `requirements.txt`.

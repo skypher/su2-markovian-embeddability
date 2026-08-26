@@ -34,7 +34,7 @@
   fill opacity=0.58,
   line width=0.6pt,
 ] table {generated/spin1_positive_polygon.dat} \closedcycle;
-\addlegendentry{positive spectrum}
+\addlegendentry{nonnegative spectrum}
 
 \addplot[
   table/x index=0,
@@ -103,7 +103,7 @@ endpoint.}
 \end{axis}
 \end{tikzpicture}
 
-\small (b) positive spectrum
+\small (b) nonnegative spectrum
 \end{minipage}
 \par\medskip
 \begin{minipage}[t]{0.48\textwidth}
@@ -121,6 +121,7 @@ endpoint.}
   zmin=0,zmax=1.05,
   ticks=none,
 ]
+\input{generated/spin3_positive_faces.tex}
 \addplot3[
   surf,
   shader=flat,
@@ -149,11 +150,13 @@ endpoint.}
 \end{axis}
 \end{tikzpicture}
 
-\small (c) covariantly embeddable
+\small (c) embeddable closure within (b)
 \end{minipage}
 \caption{Spin \(3/2\).  Panels (a) and (b) are generated from exact
-rational polytope vertices.  Panel (c) renders the three boundary
-surfaces obtained by setting one canonical rate to zero; each displayed
-surface uses rates in \([0,8]\), while the defining cone is unbounded.}
+rational polytope vertices.  Panel (c) overlays the three green
+embeddable-boundary surfaces on the orange nonnegative-spectrum
+polytope.  Each surface is obtained by setting one canonical rate to
+zero and uses the other rates in \([0,8]\), while the defining cone is
+unbounded.}
 \label{fig:spin-three-halves-regions}
 \end{figure}

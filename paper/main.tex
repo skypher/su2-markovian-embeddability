@@ -1,26 +1,68 @@
-\documentclass[11pt]{article}
+\documentclass[twoside,10pt]{article}
 
-\usepackage[a4paper,margin=1in]{geometry}
-\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+\usepackage{mathtools}
 \usepackage{bm}
+\usepackage{graphicx}
 \usepackage{microtype}
-\usepackage[hidelinks]{hyperref}
+\usepackage[small,labelfont=bf,labelsep=period]{caption}
+\usepackage[
+  letterpaper,
+  total={5.5in,8in},
+  vmarginratio=1:1,
+  hmarginratio=1:1,
+  headsep=21pt
+]{geometry}
+\usepackage{xcolor}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
+\usepackage[
+  breaklinks=false,
+  linktocpage=true
+]{hyperref}
+% Referee copy: uncomment the next line for line numbers.
+% \usepackage{lineno}\linenumbers
 \hypersetup{
+  colorlinks=true,
+  linkcolor={purple},
+  urlcolor={purple},
+  citecolor={blue!80!black},
   pdftitle={Markovian Embeddability of SU(2)-Covariant Spin Channels},
-  pdfauthor={Anonymous},
+  pdfauthor={Leslie P. Polzer},
   pdfsubject={Covariant quantum Markov semigroups and channel embedding},
   pdfkeywords={SU(2), quantum channels, GKSL generators, Markovian embedding,
     Wigner 6j symbols, CP-divisibility}
 }
 
+\medmuskip=4mu
+\thickmuskip=8mu
+\setlength{\emergencystretch}{2em}
+
+\numberwithin{equation}{section}
+
+\newtheoremstyle{slbody}
+  {8pt}
+  {8pt}
+  {\normalfont\slshape}
+  {}
+  {\bfseries}
+  {.}
+  {0.5em}
+  {\thmname{#1}\thmnumber{ #2}%
+   \thmnote{ {\normalfont\itshape(\ignorespaces#3\unskip)}}}
+\theoremstyle{slbody}
 \newtheorem{theorem}{Theorem}[section]
-\newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\renewcommand{\qedsymbol}{$\blacksquare$}
 
 \newcommand{\SU}{\mathrm{SU}(2)}
 \newcommand{\End}{\operatorname{End}}
@@ -35,15 +77,70 @@
 \newcommand{\Rplus}{\mathbb R_{\geq 0}}
 \newcommand{\conv}{\operatorname{conv}}
 
-\title{Markovian Embeddability of \(SU(2)\)-Covariant Spin Channels}
-\author{Anonymous}
-\date{}
+\title{Markovian embeddability of \(SU(2)\)-covariant\\
+spin channels}
+\author{Leslie P. Polzer}
+\newcommand{\authoraffiliation}{Independent Researcher}
+\newcommand{\authoremail}{polzer@fastmail.com}
+\date{August 26, 2026}
+
+\makeatletter
+\renewcommand{\section}{%
+  \@startsection{section}{1}{\z@}%
+    {-3.5ex \@plus -1ex \@minus -.2ex}%
+    {2.3ex \@plus .2ex}%
+    {\normalfont\large\bfseries}}
+\renewcommand{\@seccntformat}[1]{%
+  \csname the#1\endcsname.\enspace}
+
+\def\tagform@#1{%
+  \maketag@@@{(\ignorespaces{\oldstylenums{#1}}\unskip\@@italiccorr)}}
+\renewcommand{\eqref}[1]{%
+  \textup{{\normalfont(\oldstylenums{\ref{#1}}}\normalfont)}}
+
+\newcommand{\shorttitle}{MARKOVIAN EMBEDDABILITY OF SU(2)-COVARIANT CHANNELS}
+\newcommand{\shortauthors}{LESLIE P. POLZER}
+\newcommand{\ps@bookheader}{%
+  \renewcommand\@oddfoot{\hfil}%
+  \renewcommand\@evenfoot{\hfil}%
+  \renewcommand\@oddhead{%
+    \ifnum\value{page}>1
+      {\small\hfil\shortauthors}\hfil\thepage
+    \else
+      \hfil
+    \fi}%
+  \renewcommand\@evenhead{%
+    \thepage\hfil\small\shorttitle\hfil}}
+\pagestyle{bookheader}
+
+\renewcommand{\maketitle}{%
+  \begin{center}
+    {\large\bfseries\@title}\\
+    \vskip36pt
+    \ifx\@author\@empty
+      \mbox{}\par
+    \else
+      {\scshape\@author}\par
+      \medskip
+      {\small\authoraffiliation}\par
+      \smallskip
+      {\small\texttt{\authoremail}}\par
+      \smallskip
+      {\small\@date}\par
+    \fi
+    \vskip36pt
+  \end{center}}
+\makeatother
+
+\renewenvironment{abstract}
+  {\quotation\noindent\small{\bfseries\abstractname.\enspace}}
+  {\endquotation}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-For a fixed irreducible spin representation, we place the classical
+For a fixed irreducible spin representation, we place the previously known
 isotropic-spin generator classification and its Wigner \(6j\) rate
 transform in Hilbert--Schmidt normalized channel coordinates.  The
 covariant generators form a simplicial cone indexed by the nonzero
@@ -55,8 +152,18 @@ instantaneous logarithmic derivative of the absolute tensor-sector
 eigenvalues along any invertible differentiable covariant CP-divisible
 path.  Exact symbolic certificates accompany the low-spin matrices,
 polytopes, and volumes.
+
+\vskip5pt
+\noindent\textbf{Keywords.}\enspace \(SU(2)\)-covariant quantum channels;
+quantum Markov semigroups; GKSL generators; Markovian embedding; Wigner
+\(6j\) symbols; CP-divisibility.
+
+\vskip5pt
+\noindent\textbf{MSC2020 Classification.}\enspace 81P47; 81S22; 81R05.
 \end{abstract}
 
+\vskip50pt
+\baselineskip=13.5pt
 \section{Introduction}
 
 The embedding problem asks what a single quantum channel reveals about
@@ -104,12 +211,11 @@ inverse \(6j\)-symbol transforms, and the resulting rate inequalities
 below translates their decay-rate inequalities into the present
 Hilbert--Schmidt and endpoint conventions.
 
-More generally, Holevo showed that the completely positive part in a
-standard representation of a norm-continuous covariant semigroup may
-be chosen covariant and its Hamiltonian may be chosen to commute with
-the symmetry representation \cite[Abstract]{Holevo1993}; the
-form-generator theory beyond norm continuity is developed in
-\cite[Abstract]{Holevo1995}.  In the finite-dimensional irreducible
+More generally, Holevo's compact-group standard-form theorem shows that the
+completely positive part in a representation of a norm-continuous covariant
+semigroup may be chosen covariant and its Hamiltonian may be chosen to
+commute with the symmetry representation
+\cite[Sec.~3.3.4, Theorem~3.3.5]{Holevo2001}.  In the finite-dimensional irreducible
 spin setting, the multiplicity-free adjoint decomposition resolves
 this covariant completely positive part into one scalar rate per tensor
 rank.  We give a self-contained derivation in the normalization needed
@@ -359,7 +465,7 @@ generator is self-adjoint for the Hilbert--Schmidt inner product.
 
 The covariance statement behind this decomposition is the
 finite-dimensional compact-group case of Holevo's standard-form result
-\cite[Abstract]{Holevo1993}.  The proof below identifies the unique
+\cite[Sec.~3.3.4, Theorem~3.3.5]{Holevo2001}.  The proof below identifies the unique
 tensor-rank coefficients in the convention
 \eqref{eq:tensor-orthogonality}.  In the single-spin specialization,
 the resulting rank-block form is also the normalization-specific
@@ -647,9 +753,11 @@ subtracting its first row from all other rows gives the block matrix
  \qquad B_{\ell k}=v^{(j)}_{\ell k}-1
  \quad(1\leq\ell,k\leq n).
 \end{equation*}
-The lower-right block of \(V^{-1}\) is therefore \(B^{-1}\), while
-\eqref{eq:dissipator-vertex} says
-\(M^{(j)}=B\operatorname{diag}(w_1/d,\ldots,w_n/d)\).
+The lower-right block of \(V^{-1}\) is therefore \(B^{-1}\).  Moreover,
+\eqref{eq:dissipator-vertex} gives
+\begin{equation*}
+ M^{(j)}=B\operatorname{diag}(w_1/d,\ldots,w_n/d).
+\end{equation*}
 Combining this identity with \eqref{eq:V-inverse-entry} proves
 \eqref{eq:M-inverse-formula}.
 
@@ -729,7 +837,7 @@ eigenvalues are real by Theorem~\ref{thm:eigenmatrix}, hence
  \log\bm\eta=M^{(j)}(t\bm\gamma).
 \end{equation*}
 This proves necessity.  Conversely, define
-\(r=(M^{(j)})^{-1}\log\bm\eta\geq0\) and
+\(r=(M^{(j)})^{-1}\log\bm\eta\geq0\) and, taking \(t=1\),
 \(\cL=\sum_kr_k\cD_k\).  Theorem~\ref{thm:generator-classification}
 makes \(\cL\) a covariant GKSL generator.  The maps \(e^{\cL}\) and
 \(\Phi\) have the same scalar on every summand in
@@ -1193,8 +1301,9 @@ gives \(25/126\); the rational active-set script records the same
 determinant sum.  Division gives the four stated fractions.
 \end{proof}
 
-Figures~\ref{fig:spin-one-regions} and
-\ref{fig:spin-three-halves-regions} compare these polytopes with the
+Figure~\ref{fig:spin-one-regions} and
+Figures~\ref{fig:spin-three-halves-polytopes}--\ref{fig:spin-three-halves-regions}
+compare these polytopes with the
 exponential image of the generator cone; the zero-spectrum limit is
 shown only as part of its closure.  The spin-\(1\) boundary curves are
 exact.  For spin \(3/2\), the rendered boundary meshes
@@ -1233,9 +1342,11 @@ generator if and only if
 \end{lemma}
 
 \begin{proof}
-Choose a Hilbert--Schmidt orthonormal basis
-\(F_0=I/\sqrt d,F_1,\ldots,F_{d^2-1}\), where
-\(\Tr F_a=0\) for \(a\geq1\), and write
+Choose a Hilbert--Schmidt orthonormal basis satisfying
+\begin{equation*}
+ F_0=I/\sqrt d,\qquad \Tr F_a=0\quad(1\leq a\leq d^2-1).
+\end{equation*}
+For \(A\in B(\mathbb C^d)\), write
 \(|A\rangle\!\rangle=(A\otimes I)\Omega\).  Then
 \(\{|F_a\rangle\!\rangle\}\) is orthonormal,
 \(|F_0\rangle\!\rangle=|\Omega\rangle/\sqrt d\), and
@@ -1536,9 +1647,13 @@ computation, and passage of text.
 
 \section*{Code availability}
 
-The source, exact verification scripts, generated rational
-certificates, plotting data, and build instructions are available at
-\url{https://github.com/skypher/su2-markovian-embeddability}.  The saved
+The source, exact verification scripts, generated rational certificates,
+plotting data, and build instructions are available in the
+\href{https://github.com/skypher/su2-markovian-embeddability}{project
+repository}.  The version accompanying this manuscript is the tagged
+\href{https://github.com/skypher/su2-markovian-embeddability/tree/v1.0.0}
+{\texttt{v1.0.0} release}.
+The saved
 exact-reconstruction transcript
 \texttt{paper/generated/exact\_check.txt} has SHA-256 digest
 \begin{center}

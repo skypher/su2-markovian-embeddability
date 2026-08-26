@@ -59,14 +59,14 @@ endpoint.}
 \label{fig:spin-one-regions}
 \end{figure}
 
-\begin{figure}[t]
+\begin{figure}[p]
 \centering
-\begin{minipage}[t]{0.48\textwidth}
+\begin{minipage}[t]{0.78\textwidth}
 \centering
 \begin{tikzpicture}
 \begin{axis}[
-  width=0.94\linewidth,
-  height=0.76\linewidth,
+  width=0.96\linewidth,
+  height=0.72\linewidth,
   view={125}{22},
   xlabel={\(\eta_1\)},
   ylabel={\(\eta_2\)},
@@ -85,13 +85,14 @@ endpoint.}
 \end{tikzpicture}
 
 \small (a) all channels
-\end{minipage}%
-\begin{minipage}[t]{0.48\textwidth}
+\end{minipage}
+\par\medskip
+\begin{minipage}[t]{0.78\textwidth}
 \centering
 \begin{tikzpicture}
 \begin{axis}[
-  width=0.94\linewidth,
-  height=0.76\linewidth,
+  width=0.96\linewidth,
+  height=0.72\linewidth,
   view={125}{22},
   xlabel={\(\eta_1\)},
   ylabel={\(\eta_2\)},
@@ -111,12 +112,19 @@ endpoint.}
 
 \small (b) nonnegative spectrum
 \end{minipage}
-\par\medskip
-\begin{minipage}[t]{0.68\textwidth}
+\caption{Spin \(3/2\) static geometry.  Both panels are generated from
+exact rational vertices: panel (a) is the full covariant-channel simplex,
+and panel (b) is its intersection with the nonnegative spectral orthant.}
+\label{fig:spin-three-halves-polytopes}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\begin{minipage}[t]{0.86\textwidth}
 \centering
 \begin{tikzpicture}
 \begin{axis}[
-  width=0.94\linewidth,
+  width=0.96\linewidth,
   height=0.76\linewidth,
   view={125}{22},
   xlabel={\(\eta_1\)},
@@ -135,38 +143,36 @@ endpoint.}
   surf,
   shader=flat,
   draw=green!35!black,
-  line width=0.08pt,
-  fill opacity=0.32,
+  line width=0.1pt,
+  fill opacity=0.24,
   mesh/rows=33,
 ] table {generated/spin3_markov_face_1.dat};
 \addplot3[
   surf,
   shader=flat,
   draw=green!35!black,
-  line width=0.08pt,
-  fill opacity=0.32,
+  line width=0.1pt,
+  fill opacity=0.24,
   mesh/rows=33,
 ] table {generated/spin3_markov_face_2.dat};
 \addplot3[
   surf,
   shader=flat,
   draw=green!35!black,
-  line width=0.08pt,
-  fill opacity=0.32,
+  line width=0.1pt,
+  fill opacity=0.24,
   mesh/rows=33,
 ] table {generated/spin3_markov_face_3.dat};
 \addplot3[only marks,mark=*,mark size=0.9pt] coordinates {(1,1,1)};
 \end{axis}
 \end{tikzpicture}
 
-\small (c) embeddable closure within the nonnegative-spectrum polytope
 \end{minipage}
-\par\medskip
-\caption{Spin \(3/2\).  Panels (a) and (b) are generated from exact
-rational polytope vertices.  Panel (c) overlays the three green
-embeddable-boundary surfaces on the orange nonnegative-spectrum
-polytope.  Each surface is obtained by setting one canonical rate to
-zero and uses the other rates in \([0,8]\), while the defining cone is
-unbounded.}
+\caption{Spin \(3/2\) embeddable geometry.  The three green boundary
+surfaces are overlaid on the orange nonnegative-spectrum polytope.  Each
+surface is obtained by setting one canonical rate to zero and uses the
+other rates in \([0,8]\), while the defining cone is unbounded.  The
+reduced opacity and full-width panel expose the intersections of the
+three sheets.}
 \label{fig:spin-three-halves-regions}
 \end{figure}

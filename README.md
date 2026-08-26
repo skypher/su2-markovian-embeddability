@@ -1,7 +1,10 @@
 # Markovian embeddability of SU(2)-covariant spin channels
 
-This repository contains a paper draft and exact symbolic artifacts for
-covariant Markovian embedding on a fixed irreducible spin space.
+This repository contains Leslie P. Polzer's manuscript and exact symbolic
+artifacts for covariant Markovian embedding on a fixed irreducible spin
+space.
+
+**[Read the current manuscript](paper/main.pdf)**
 
 ## Main result
 
@@ -74,6 +77,8 @@ the exact Euclidean volume
   transcript.
 - `ROADMAP.md`: theorem-slot acceptance ledger and source map.
 
+The manuscript release is tagged `v1.0.0`.
+
 ## Reproduce
 
 From the repository root:
@@ -95,3 +100,9 @@ projector, and compares the results with the 6j formulas for
 The checked environment is Python 3.12.3, SymPy 1.12, mpmath 1.2.1,
 and TeX Live 2023 with PGFPlots compatibility level 1.18.  The Python
 package versions are pinned in `requirements.txt`.
+
+## Contact
+
+Leslie P. Polzer<br>
+Independent Researcher<br>
+[polzer@fastmail.com](mailto:polzer@fastmail.com)

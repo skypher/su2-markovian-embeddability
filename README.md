@@ -12,8 +12,9 @@ The endpoint problem in this project always requires the generator to be
 SU(2)-covariant; it makes no claim about noncovariant logarithms of a covariant
 channel.  The covariant-generator classification and Wigner-6j rate transform
 are translated from the earlier isotropic-spin literature.  The manuscript
-then derives the determinant identity, endpoint cone, exact low-spin geometry,
-all-spin volume, and fixed-sign CP-divisibility criterion in one normalization.
+then derives the determinant-magnitude identity, endpoint cone, exact low-spin
+geometry, all-spin volume, and fixed-sign CP-divisibility criterion in one
+normalization.
 
 With the Hilbert--Schmidt normalized tensor operators fixed in
 `AGENTS.md`, every SU(2)-covariant GKSL generator is uniquely
@@ -50,16 +51,16 @@ time-homogeneous generator exactly when every \(\eta_\ell>0\) and
 \]
 
 The paper gives explicit primitive facets for spins \(1\), \(3/2\),
-and \(2\).  An arbitrary invertible differentiable covariant path is
-CP-divisible exactly when
+and \(2\).  An invertible differentiable covariant channel path, not
+necessarily normalized at the identity, is CP-divisible exactly when
 
 \[
 (M^{(j)})^{-1}\frac{d}{dt}\log|\eta(t)|\geq0,
 \]
 
-where the absolute value is componentwise.  This includes fixed
-negative-spectrum branches; for paths beginning at the identity the
-absolute values may be omitted.
+where the absolute value is componentwise.  Sector signs are fixed along
+such a path.  For identity-normalized paths every sector eigenvalue is
+positive, so the absolute values may be omitted.
 
 In \(n=2j\) sector-eigenvalue coordinates, the embeddable region has
 the exact Euclidean volume
@@ -84,8 +85,7 @@ the exact Euclidean volume
   transcript.
 - `ROADMAP.md`: theorem-slot acceptance ledger and source map.
 
-The initial public manuscript release is tagged `v1.0.0`; subsequent revisions
-are recorded by the repository history.
+The reviewed manuscript revision is archived under the `v1.1.0` tag.
 
 ## Reproduce
 

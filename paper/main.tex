@@ -16,6 +16,10 @@
   headsep=21pt
 ]{geometry}
 \usepackage{xcolor}
+\definecolor{cbBlue}{HTML}{0072B2}
+\definecolor{cbOrange}{HTML}{E69F00}
+\definecolor{cbGreen}{HTML}{009E73}
+\definecolor{cbPurple}{HTML}{CC79A7}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
 \usepackage[
@@ -26,9 +30,9 @@
 % \usepackage{lineno}\linenumbers
 \hypersetup{
   colorlinks=true,
-  linkcolor={purple},
-  urlcolor={purple},
-  citecolor={blue!80!black},
+  linkcolor={blue!45!black},
+  urlcolor={blue!45!black},
+  citecolor={blue!45!black},
   pdftitle={Embedding SU(2)-Covariant Spin Channels into SU(2)-Covariant Quantum Markov Semigroups},
   pdfauthor={Leslie P. Polzer},
   pdfsubject={Covariant quantum Markov semigroups and channel embedding},
@@ -141,18 +145,20 @@
 \maketitle
 
 \begin{abstract}
-For a fixed irreducible spin representation, we translate the known
+For a fixed irreducible spin representation, we express the known
 isotropic-spin generator classification and Wigner \(6j\) rate transform
-into Hilbert--Schmidt normalized channel coordinates.  Building on those
-inputs, we compute the determinant of the generator eigenvalue matrix,
-formulate the exponential endpoint criterion, obtain logarithmic endpoint
-inequalities through spin \(2\), and derive the exact volume of the
-embeddable region for every spin.  Under an explicitly identity-free
-channel-path convention, the same cone characterizes the instantaneous
-logarithmic derivatives of the componentwise absolute values of the
-tensor-sector eigenvalues along any invertible differentiable covariant
-CP-divisible path.  Exact symbolic certificates accompany the low-spin
-matrices, polytopes, and volumes.
+in Hilbert--Schmidt normalized channel coordinates.  A covariant channel
+with nontrivial sector spectrum \(\bm\eta\) is a finite-time endpoint of a
+covariant quantum Markov semigroup if and only if every component is
+positive and \((M^{(j)})^{-1}\log\bm\eta\geq0\).  We derive the determinant
+magnitude of \(M^{(j)}\), logarithmic endpoint inequalities through spin
+\(2\), and the exact volume of the embeddable region for every spin.  For
+identity-normalized invertible differentiable covariant channel paths,
+the same cone characterizes CP-divisibility through the instantaneous
+logarithmic derivatives of the sector eigenvalues.  The statement extends,
+with \(\log|\bm\eta|\), to channel paths not normalized at the identity.
+Exact symbolic certificates accompany the low-spin matrices, polytopes,
+and volumes.
 
 \vskip5pt
 \noindent\textbf{Keywords.}\enspace \(\mathrm{SU}(2)\)-covariant quantum channels;
@@ -193,6 +199,10 @@ approximations and trace formulas for this simplex
 \cite[Sec.~1]{AschieriRubaSolovej2024}.  Recent work on Weyl dynamical
 maps gives semigroup and non-Markovianity criteria in a different
 covariant family \cite[Proposition~2]{XuJagadish2026}.
+In the same Weyl-covariant setting, Shahbeigi, Amaro-Alcal{\'a},
+Pucha{\l}a, and \.{Z}yczkowski describe the log-convex geometry and
+volume of accessible channels
+\cite[Corollary~4, Sec.~IV, and Eq.~(68)]{ShahbeigiEtAl2021}.
 Rudnicki, Klimov, Mu{\~n}oz, Leuchs, and S{\'a}nchez-Soto give a recent
 Choi--Kraus characterization of the static \(\SU\)-covariant channel
 family and its diagonal action on irreducible tensor sectors
@@ -217,58 +227,57 @@ More generally, Holevo's compact-group standard-form theorem shows that the
 completely positive part in a representation of a norm-continuous covariant
 semigroup may be chosen covariant and its Hamiltonian may be chosen to
 commute with the symmetry representation
-\cite[Sec.~3.3.4, Theorem~3.3.5]{Holevo2001}.  In the finite-dimensional irreducible
-spin setting, the multiplicity-free adjoint decomposition resolves
-this covariant completely positive part into one scalar rate per tensor
-rank.  We give a self-contained derivation in the normalization needed
-for the endpoint calculation.
+\cite[Sec.~3.3.4, Theorem~3.3.5]{Holevo2001}; see also Holevo's original
+article \cite[p.~211]{Holevo1993}.  In the finite-dimensional irreducible spin
+setting, the multiplicity-free adjoint decomposition resolves this
+covariant completely positive part into one scalar rate per tensor rank.
+We give a self-contained derivation in the normalization needed for the
+endpoint calculation.
 
-For time-dependent evolutions, CP-divisibility and its relation to
-time-local GKSL rates are developed in
-\cite[especially Eqs.~(1)--(2)]{RivasHuelgaPlenio2010} and
-\cite[Secs.~II--III]{HallCresserLiAndersson2014}.  Those works use the
-usual identity-based dynamical-map setting.  Definition~\ref{def:cp-divisibility}
-below states the broader channel-path convention used here; the
-identity-based case is then recovered as a corollary.
+For time-dependent evolutions, the distinction between semigroup
+embeddability and divisibility is developed in
+\cite[Secs.~2--4]{WolfCirac2008} and \cite[Sec.~3]{DavalosZimanPineda2019}.
+The relation between CP-divisibility and time-local GKSL rates is treated in
+\cite[especially Eqs.~(1)--(2)]{RivasHuelgaPlenio2010},
+\cite[Secs.~II--III]{HallCresserLiAndersson2014}, and
+\cite[Secs.~2--3]{MontesCabreraDavalosGorin2019}.  These references use
+identity-normalized dynamical maps.  Definition~\ref{def:cp-divisibility}
+also permits paths whose initial channel is not the identity; the distinction
+is stated explicitly there.
 
 Here the symmetry is imposed on the continuous-time generator as well
 as on its endpoint.  Thus ``embeddable'' below means embeddable by an
 \(\SU\)-covariant GKSL generator; no assertion is made about a
-noncovariant logarithm of the same endpoint.  For completeness, the
-paper first rederives in the fixed normalization two inputs from the
-cited literature:
+noncovariant logarithm of the same endpoint.  The argument uses three
+known inputs, which we restate and verify in the normalization of this
+paper:
 \begin{enumerate}
+ \item the covariant channels form a simplex whose vertices act
+ diagonally on irreducible tensor sectors;
  \item every covariant generator is a unique nonnegative combination
- of the tensor-rank dissipators \(\cD_k\);
- \item its sector eigenvalue matrix \(M^{(j)}\) and inverse matrix are
- single \(6j\)-symbol formulas.
+ of tensor-rank dissipators; and
+ \item the multipole interaction strengths and relaxation rates are
+ related by mutually inverse Wigner \(6j\) transforms.
 \end{enumerate}
-The additional results developed here are:
+In these coordinates, the endpoint consequences are:
 \begin{enumerate}
- \item the determinant identity \(\lvert\det M^{(j)}\rvert=2j+1\);
  \item positivity of all sector eigenvalues together with
  \((M^{(j)})^{-1}\log\bm\eta\geq0\) is necessary and sufficient for
- covariant endpoint embeddability, yielding explicit logarithmic-cone
- facets through spin \(2\);
- \item the exact Euclidean volume of the embeddable region and exact
- low-spin comparison polytopes;
- \item the same inequalities applied to
- \(d(\log|\bm\eta(t)|)/dt\) characterize all invertible differentiable
- covariant CP-divisible channel paths under Definition~\ref{def:cp-divisibility},
- including fixed negative-spectrum branches.
+ covariant endpoint embeddability;
+ \item the inverse-rate inequalities become explicit logarithmic-cone
+ facets, listed through spin \(2\); and
+ \item along identity-normalized invertible differentiable covariant
+ paths, the same cone applied to \(d(\log\bm\eta(t))/dt\) characterizes
+ CP-divisibility.  For paths with a nonidentity initial channel, the
+ corresponding statement uses \(d(\log|\bm\eta(t)|)/dt\).
 \end{enumerate}
-The static channel simplex, its sector eigenvalue transform, and the
-isotropic generator--relaxation-rate transform are taken from the cited
-literature.  The present contribution places them
-in one Hilbert--Schmidt normalization, gives a self-contained
-recoupling derivation, obtains \(\lvert\det M^{(j)}\rvert=2j+1\),
-formulates the exponential endpoint cone, lists its spin-\(3/2\) and
-spin-\(2\) logarithmic-cone facets, proves the fixed-sign CP-divisibility
-criterion, and
-derives exact volume and polytope certificates.  All displayed low-spin
-matrices and polytope intersections have exact symbolic certificates;
-floating-point values are used only to render sampled boundary curves
-and meshes.
+The additional calculations are the determinant-magnitude identity
+\(\lvert\det M^{(j)}\rvert=2j+1\), exact Euclidean volumes of the
+embeddable regions, and exact low-spin comparison polytopes.  All
+displayed low-spin matrices and polytope intersections have symbolic
+certificates.  Floating-point values are used only to render the
+spin-\(1\) boundary curves and spin-\(3/2\) boundary meshes whose defining
+equations are exact.
 
 \section{Tensor conventions and covariant channels}
 
@@ -632,7 +641,8 @@ matrix identity
 \end{equation}
 so \(I\otimes\beta\) intertwines
 \(U_j\otimes\overline{U_j}\) with \(U_j\otimes U_j\).
-The tensors are real, and
+In the chosen angular-momentum basis, the Clebsch--Gordan coefficients
+and hence the tensors are real, and
 \cite[Eq.~(A6)]{Breuer2005} therefore states
 \(\beta(T_q^{(k)})^{\mathsf T}\beta^\dagger=(-1)^kT_q^{(k)}\).
 Taking adjoints gives
@@ -1321,8 +1331,9 @@ its restricted superoperator trace is
  =1,
 \end{equation*}
 where the last equality is the Hilbert--Schmidt normalization of
-\(T_0^{(k)}\).  The scalar term in
-\eqref{eq:dissipator-simplified} has restricted trace \(2k+1\), so
+\(T_0^{(k)}\).  The negative scalar term in
+\eqref{eq:dissipator-simplified} contributes \(-(2k+1)\) to the
+restricted trace, so
 \begin{equation}\label{eq:diagonal-dissipator-trace}
  \Tr(\cD_k|_{\Delta_j})=-2k.
 \end{equation}
@@ -1382,12 +1393,13 @@ truncate the nonnegative rates at \(8\); the inequalities
 \eqref{eq:spin-three-halves-facet-one}--\eqref{eq:spin-three-halves-facet-three}
 remain the exact description.
 
+\clearpage
 \input{figures/regions}
 \clearpage
 
 \section{Differentiable CP-divisible paths}
 
-\begin{definition}[CP-divisibility]\label{def:cp-divisibility}
+\begin{definition}[CP-divisible channel paths]\label{def:cp-divisibility}
 Let \(I\subset\mathbb R\) be a nondegenerate interval.  A family of
 channels \(\{\Phi_t\}_{t\in I}\) is CP-divisible if there are channels
 \(\cV_{t,s}\) for every \(s\leq t\) in \(I\) such that
@@ -1396,17 +1408,24 @@ channels \(\{\Phi_t\}_{t\in I}\) is CP-divisible if there are channels
  \cV_{t,t}=\id,\qquad
  \cV_{u,t}\cV_{t,s}=\cV_{u,s}\quad(s\leq t\leq u).
 \end{equation}
-No distinguished identity time is required in this channel-path
-definition.  When \(\Phi_{t_0}=\id\), we call the family identity-based
-at \(t_0\).  For the invertible paths considered below, the first
-identity in \eqref{eq:propagator-convention} uniquely determines the
-propagators, and the other two identities follow.
+The channel-path definition does not itself require
+\(\Phi_{t_0}=\id\) at any distinguished time.  When this equality holds,
+we call the path identity-normalized at \(t_0\).  For the invertible paths
+considered below, the first identity in
+\eqref{eq:propagator-convention} uniquely determines the propagators, and
+the other two identities follow.  Thus fixed negative sector signs can
+occur only under the broader, nonidentity-normalized convention.
 A \(C^1\) path on \(I\) below has a continuous derivative in the
 interior, with the corresponding one-sided continuous derivative at
 each included endpoint.  Norms of superoperators, including those in
 remainder and convergence statements, are the operator norms induced
 by the Hilbert--Schmidt norm.
 \end{definition}
+
+The next lemma uses Choi's matrix criterion for complete positivity
+\cite[Theorem~2]{Choi1975} to describe the tangent cone at the identity,
+written in the present vectorization convention.  We include the
+finite-dimensional derivation to make the normalization explicit.
 
 \begin{lemma}[Compressed-Choi characterization]
 \label{lem:compressed-choi-gks}
@@ -1603,26 +1622,29 @@ Theorems~\ref{thm:generator-classification} and
 \ref{thm:eigenmatrix}.
 \end{proof}
 
-\begin{corollary}[Spin-\(1/2\) negative-spectrum branches]
+\begin{corollary}[Spin-\(1/2\) fixed-sign paths]
 \label{cor:negative-spectrum-paths}
 Let \(t\mapsto\Phi_t\) be an invertible \(C^1\) path of spin-\(1/2\)
 covariant channels.  Then it is CP-divisible if and only if
 \begin{equation*}
  \frac{d}{dt}\log|\eta_1(t)|\leq0.
 \end{equation*}
-In particular, the constant path at the nonidentity vertex
-\(\eta_1=-1/3\) is invertible and CP-divisible.
 \end{corollary}
 
 \begin{proof}
 Corollary~\ref{cor:spin-one-half} gives
 \((M^{(1/2)})^{-1}=-1/2\), so Theorem~\ref{thm:path-criterion}
-reduces to the displayed inequality.  The constant vertex path has
-zero logarithmic derivative, and its propagators are the identity
-channel.  It is therefore a CP-divisible channel-valued path in the
-sense of Definition~\ref{def:cp-divisibility}, but it is not
-identity-based.
+reduces to the displayed inequality.
 \end{proof}
+
+\begin{remark}
+Under Definition~\ref{def:cp-divisibility}, every constant invertible
+channel path is CP-divisible, with identity propagators.  In particular,
+this applies to the spin-\(1/2\) nonidentity vertex \(\eta_1=-1/3\).  The
+example illustrates the absence of identity normalization in the broader
+path convention; it does not embed that negative-spectrum vertex into a
+time-homogeneous quantum Markov semigroup issuing from the identity.
+\end{remark}
 
 \section{Exact computation and reproducibility}
 
@@ -1715,11 +1737,13 @@ form in the present Hilbert--Schmidt normalization: covariance converts
 the canonical GKS matrix into one nonnegative rate per nonzero tensor
 rank, and the Racah transform converts those rates to sector decay
 exponents by \(M^{(j)}\).  Its orthogonality gives the inverse
-\eqref{eq:M-inverse-formula}, while the additional determinant identity
-and componentwise exponential turn this rate cone into an endpoint
-criterion.  Time-dependent CP-divisibility is the pointwise version of
-the same test applied to the logarithmic derivatives of the
-componentwise absolute sector eigenvalues.  The
+\eqref{eq:M-inverse-formula}, while the additional determinant-magnitude
+identity and componentwise exponential turn this rate cone into an
+endpoint criterion.  For identity-normalized paths, time-dependent
+CP-divisibility is the pointwise version of the same test applied to the
+logarithmic derivatives of the sector eigenvalues.  For the broader
+channel-path convention, the signs are constant and the criterion uses
+the componentwise absolute values.  The
 low-spin corollaries and comparison plots distinguish complete
 positivity, sectorwise nonnegativity, and covariant Markovian
 embeddability.
@@ -1740,10 +1764,9 @@ computation, and passage of text.
 The source, exact verification scripts, generated rational certificates,
 plotting data, and build instructions are available in the
 \href{https://github.com/skypher/su2-markovian-embeddability}{project
-repository}.  The initial public manuscript release is available under the
-\href{https://github.com/skypher/su2-markovian-embeddability/tree/v1.0.0}
-{\texttt{v1.0.0} tag}; subsequent revisions, including this manuscript,
-are identified by the repository history.  Machine-readable citation
+repository}.  This reviewed manuscript revision is archived under the
+\href{https://github.com/skypher/su2-markovian-embeddability/tree/v1.1.0}
+{\texttt{v1.1.0} tag}.  Machine-readable citation
 metadata and the
 repository reuse terms are recorded in \texttt{CITATION.cff} and
 \texttt{LICENSE}, respectively.

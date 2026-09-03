@@ -226,7 +226,7 @@ def _write_markov_surface(
     cutoff_path: Path,
     matrix: Matrix,
     fixed_rate: int,
-    grid_size: int = 33,
+    grid_size: int = 25,
     maximum_rate: float = 8.0,
 ) -> None:
     varying = [index for index in range(3) if index != fixed_rate]
@@ -383,16 +383,16 @@ def main() -> None:
         GENERATED / "spin3_full_faces.tex",
         full_faces,
         (
-            "draw=gray!80,fill=gray!35,fill opacity=0.22,"
-            "line width=0.35pt,forget plot"
+            "draw=black!72,fill=gray!38,fill opacity=0.34,"
+            "line width=0.65pt,forget plot"
         ),
     )
     _write_faces(
         GENERATED / "spin3_positive_faces.tex",
         positive_faces,
         (
-            "draw=orange!85!black,fill=orange!55,fill opacity=0.28,"
-            "line width=0.35pt,forget plot"
+            "draw=cbOrange!85!black,fill=cbOrange,fill opacity=0.27,"
+            "line width=0.65pt,forget plot"
         ),
     )
 

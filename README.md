@@ -1,4 +1,4 @@
-# Markovian embeddability of SU(2)-covariant spin channels
+# Embedding SU(2)-covariant spin channels into SU(2)-covariant quantum Markov semigroups
 
 This repository contains Leslie P. Polzer's manuscript and exact symbolic
 artifacts for covariant Markovian embedding on a fixed irreducible spin
@@ -6,7 +6,14 @@ space.
 
 **[Read the current manuscript](paper/main.pdf)**
 
-## Main result
+## Scope and main result
+
+The endpoint problem in this project always requires the generator to be
+SU(2)-covariant; it makes no claim about noncovariant logarithms of a covariant
+channel.  The covariant-generator classification and Wigner-6j rate transform
+are translated from the earlier isotropic-spin literature.  The manuscript
+then derives the determinant identity, endpoint cone, exact low-spin geometry,
+all-spin volume, and fixed-sign CP-divisibility criterion in one normalization.
 
 With the Hilbert--Schmidt normalized tensor operators fixed in
 `AGENTS.md`, every SU(2)-covariant GKSL generator is uniquely
@@ -77,7 +84,8 @@ the exact Euclidean volume
   transcript.
 - `ROADMAP.md`: theorem-slot acceptance ledger and source map.
 
-The manuscript release is tagged `v1.0.0`.
+The initial public manuscript release is tagged `v1.0.0`; subsequent revisions
+are recorded by the repository history.
 
 ## Reproduce
 
@@ -92,6 +100,9 @@ make figures
 make paper
 ```
 
+Both executable entry points support `-h` and `--help` without generating or
+changing artifacts.
+
 `make check` reconstructs the generator matrices directly from tensor
 operators, checks every magnetic component and each normalized Choi
 projector, and compares the results with the 6j formulas for
@@ -100,6 +111,11 @@ projector, and compares the results with the 6j formulas for
 The checked environment is Python 3.12.3, SymPy 1.12, mpmath 1.2.1,
 and TeX Live 2023 with PGFPlots compatibility level 1.18.  The Python
 package versions are pinned in `requirements.txt`.
+
+## Citation and reuse
+
+Machine-readable citation metadata are in `CITATION.cff`.  Repository reuse
+terms are stated in `LICENSE`.
 
 ## Contact
 

@@ -137,42 +137,66 @@ and panel (b) is its intersection with the nonnegative spectral orthant.}
   ytick={0,0.5,1},
   ztick={0,0.5,1},
   tick label style={font=\scriptsize},
+  legend style={
+    at={(0.02,0.98)},anchor=north west,
+    draw=none,fill=white,fill opacity=0.86,
+    text opacity=1,font=\scriptsize,
+  },
+  legend cell align=left,
 ]
 \input{generated/spin3_positive_faces.tex}
 \addplot3[
-  surf,
-  shader=flat,
-  draw=green!35!black,
-  line width=0.1pt,
-  fill opacity=0.24,
+  mesh,
+  draw=blue!75!black,
+  opacity=0.72,
+  line width=0.24pt,
   mesh/rows=33,
 ] table {generated/spin3_markov_face_1.dat};
+\addlegendentry{boundary \(r_1=0\)}
 \addplot3[
-  surf,
-  shader=flat,
-  draw=green!35!black,
-  line width=0.1pt,
-  fill opacity=0.24,
+  no marks,densely dashed,draw=blue!75!black,line width=0.85pt,
+  unbounded coords=jump,forget plot,
+] table {generated/spin3_markov_face_1_cutoff.dat};
+\addplot3[
+  mesh,
+  draw=green!45!black,
+  opacity=0.72,
+  line width=0.24pt,
   mesh/rows=33,
 ] table {generated/spin3_markov_face_2.dat};
+\addlegendentry{boundary \(r_2=0\)}
 \addplot3[
-  surf,
-  shader=flat,
-  draw=green!35!black,
-  line width=0.1pt,
-  fill opacity=0.24,
+  no marks,densely dashed,draw=green!45!black,line width=0.85pt,
+  unbounded coords=jump,forget plot,
+] table {generated/spin3_markov_face_2_cutoff.dat};
+\addplot3[
+  mesh,
+  draw=violet!80!black,
+  opacity=0.72,
+  line width=0.24pt,
   mesh/rows=33,
 ] table {generated/spin3_markov_face_3.dat};
+\addlegendentry{boundary \(r_3=0\)}
+\addplot3[
+  no marks,densely dashed,draw=violet!80!black,line width=0.85pt,
+  unbounded coords=jump,forget plot,
+] table {generated/spin3_markov_face_3_cutoff.dat};
+\addplot3[
+  only marks,mark=*,mark size=1.5pt,
+  mark options={draw=black,fill=black},
+] coordinates {(0.367879441171,0.367879441171,0.367879441171)};
+\addlegendentry{embeddable interior point}
 \addplot3[only marks,mark=*,mark size=0.9pt] coordinates {(1,1,1)};
 \end{axis}
 \end{tikzpicture}
 
 \end{minipage}
-\caption{Spin \(3/2\) embeddable geometry.  The three green boundary
-surfaces are overlaid on the orange nonnegative-spectrum polytope.  Each
-surface is obtained by setting one canonical rate to zero and uses the
-other rates in \([0,8]\), while the defining cone is unbounded.  The
-reduced opacity and full-width panel expose the intersections of the
-three sheets.}
+\caption{Spin \(3/2\) embeddable geometry.  The three colored boundary
+meshes are overlaid on the orange nonnegative-spectrum polytope and are
+labeled by the canonical rate set to zero.  The embeddable region is the
+common side of the sheets containing the marked diagonal point
+\(e^{-1}(1,1,1)\).  The two free rates on each mesh range over \([0,8]\),
+while the defining cone is unbounded.  The heavier dashed mesh edges are
+sampling cutoffs, not mathematical boundary curves.}
 \label{fig:spin-three-halves-regions}
 \end{figure}

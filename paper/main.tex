@@ -29,7 +29,7 @@
   linkcolor={purple},
   urlcolor={purple},
   citecolor={blue!80!black},
-  pdftitle={Markovian Embeddability of SU(2)-Covariant Spin Channels},
+  pdftitle={Embedding SU(2)-Covariant Spin Channels into SU(2)-Covariant Quantum Markov Semigroups},
   pdfauthor={Leslie P. Polzer},
   pdfsubject={Covariant quantum Markov semigroups and channel embedding},
   pdfkeywords={SU(2), quantum channels, GKSL generators, Markovian embedding,
@@ -74,15 +74,16 @@
 \newcommand{\cE}{\mathcal E}
 \newcommand{\cP}{\mathcal P}
 \newcommand{\cU}{\mathcal U}
+\newcommand{\cV}{\mathcal V}
 \newcommand{\Rplus}{\mathbb R_{\geq 0}}
 \newcommand{\conv}{\operatorname{conv}}
 
-\title{Markovian embeddability of \(SU(2)\)-covariant\\
-spin channels}
+\title{Embedding \(\mathrm{SU}(2)\)-covariant spin channels into\\
+\(\mathrm{SU}(2)\)-covariant quantum Markov semigroups}
 \author{Leslie P. Polzer}
 \newcommand{\authoraffiliation}{Independent Researcher}
 \newcommand{\authoremail}{polzer@fastmail.com}
-\date{August 26, 2026}
+\date{September 3, 2026}
 
 \makeatletter
 \renewcommand{\section}{%
@@ -98,7 +99,7 @@ spin channels}
 \renewcommand{\eqref}[1]{%
   \textup{{\normalfont(\oldstylenums{\ref{#1}}}\normalfont)}}
 
-\newcommand{\shorttitle}{MARKOVIAN EMBEDDABILITY OF SU(2)-COVARIANT CHANNELS}
+\newcommand{\shorttitle}{EMBEDDING SU(2)-COVARIANT SPIN CHANNELS}
 \newcommand{\shortauthors}{LESLIE P. POLZER}
 \newcommand{\ps@bookheader}{%
   \renewcommand\@oddfoot{\hfil}%
@@ -140,21 +141,21 @@ spin channels}
 \maketitle
 
 \begin{abstract}
-For a fixed irreducible spin representation, we place the previously known
-isotropic-spin generator classification and its Wigner \(6j\) rate
-transform in Hilbert--Schmidt normalized channel coordinates.  The
-covariant generators form a simplicial cone indexed by the nonzero
-tensor ranks.  We give a self-contained recoupling derivation, compute
-the determinant of the generator eigenvalue matrix, formulate the
-exponential endpoint criterion, and obtain logarithmic endpoint
-inequalities through spin \(2\).  The same cone characterizes the
-instantaneous logarithmic derivative of the absolute tensor-sector
-eigenvalues along any invertible differentiable covariant CP-divisible
-path.  Exact symbolic certificates accompany the low-spin matrices,
-polytopes, and volumes.
+For a fixed irreducible spin representation, we translate the known
+isotropic-spin generator classification and Wigner \(6j\) rate transform
+into Hilbert--Schmidt normalized channel coordinates.  Building on those
+inputs, we compute the determinant of the generator eigenvalue matrix,
+formulate the exponential endpoint criterion, obtain logarithmic endpoint
+inequalities through spin \(2\), and derive the exact volume of the
+embeddable region for every spin.  Under an explicitly identity-free
+channel-path convention, the same cone characterizes the instantaneous
+logarithmic derivatives of the componentwise absolute values of the
+tensor-sector eigenvalues along any invertible differentiable covariant
+CP-divisible path.  Exact symbolic certificates accompany the low-spin
+matrices, polytopes, and volumes.
 
 \vskip5pt
-\noindent\textbf{Keywords.}\enspace \(SU(2)\)-covariant quantum channels;
+\noindent\textbf{Keywords.}\enspace \(\mathrm{SU}(2)\)-covariant quantum channels;
 quantum Markov semigroups; GKSL generators; Markovian embedding; Wigner
 \(6j\) symbols; CP-divisibility.
 
@@ -171,12 +172,13 @@ a possible continuous-time evolution: given \(\Phi\), does there exist a
 GKSL generator \(\cL\) and a time \(t>0\) such that
 \(\Phi=e^{t\cL}\)?  General finite-dimensional criteria must contend
 with matrix logarithm branches and conditional complete positivity
-\cite{WolfEisertCubittCirac2008}.  Symmetry changes that problem
+\cite[Eqs.~(2)--(5)]{WolfEisertCubittCirac2008}.  Symmetry changes that problem
 substantially when it forces both the channel and the generator to be
 scalar on a multiplicity-free decomposition.
 
-For irreducible \(SU(2)\) representations, the static channel geometry
-is explicit.  Al Nuwairan proved that the EPOSIC channels are precisely
+For irreducible \(\SU\) representations, the static channel geometry
+is explicit.  Al Nuwairan introduced a family called the EPOSIC channels
+and proved that they are precisely
 the extreme points of the covariant-channel simplex
 \cite[Proposition~4.1]{AlNuwairan2014}.  The same vertices appear as
 Clebsch--Gordan channels in
@@ -192,17 +194,17 @@ approximations and trace formulas for this simplex
 maps gives semigroup and non-Markovianity criteria in a different
 covariant family \cite[Proposition~2]{XuJagadish2026}.
 Rudnicki, Klimov, Mu{\~n}oz, Leuchs, and S{\'a}nchez-Soto give a recent
-Choi--Kraus characterization of the static \(SU(2)\)-covariant channel
+Choi--Kraus characterization of the static \(\SU\)-covariant channel
 family and its diagonal action on irreducible tensor sectors
 \cite[Secs.~4--5, especially Eq.~(38)]
-{RudnickiKlimovMunozLeuchsSanchezSoto2026}.  At a simplex extreme,
+{RudnickiKlimovMunozLeuchsSanchezSoto2026}.  At each simplex vertex,
 their Eq.~(38) is the vertex eigenvalue formula used below; we record
 the exact conversion in Proposition~\ref{prop:static-dictionary}.
 
 The continuous-time single-spin problem also has direct antecedents.
 Verri and Gorini parametrized isotropic spin semigroups by interaction
 strengths and multipole relaxation rates
-\cite{VerriGorini1978}.  Gorini, Verri, and Sudarshan subsequently
+\cite[p.~1803]{VerriGorini1978}.  Gorini, Verri, and Sudarshan subsequently
 corrected the complete-positivity condition and, in their single-spin
 specialization, gave the irreducible-rank generator form, mutually
 inverse \(6j\)-symbol transforms, and the resulting rate inequalities
@@ -221,30 +223,48 @@ this covariant completely positive part into one scalar rate per tensor
 rank.  We give a self-contained derivation in the normalization needed
 for the endpoint calculation.
 
+For time-dependent evolutions, CP-divisibility and its relation to
+time-local GKSL rates are developed in
+\cite[especially Eqs.~(1)--(2)]{RivasHuelgaPlenio2010} and
+\cite[Secs.~II--III]{HallCresserLiAndersson2014}.  Those works use the
+usual identity-based dynamical-map setting.  Definition~\ref{def:cp-divisibility}
+below states the broader channel-path convention used here; the
+identity-based case is then recovered as a corollary.
+
 Here the symmetry is imposed on the continuous-time generator as well
 as on its endpoint.  Thus ``embeddable'' below means embeddable by an
-\(SU(2)\)-covariant GKSL generator; no assertion is made about a
-noncovariant logarithm of the same endpoint.  The main results are:
+\(\SU\)-covariant GKSL generator; no assertion is made about a
+noncovariant logarithm of the same endpoint.  For completeness, the
+paper first rederives in the fixed normalization two inputs from the
+cited literature:
 \begin{enumerate}
- \item every invariant generator is a unique nonnegative combination
+ \item every covariant generator is a unique nonnegative combination
  of the tensor-rank dissipators \(\cD_k\);
- \item its sector eigenvalue matrix \(M^{(j)}\) and the inverse matrix
- are single \(6j\)-symbol formulas;
+ \item its sector eigenvalue matrix \(M^{(j)}\) and inverse matrix are
+ single \(6j\)-symbol formulas.
+\end{enumerate}
+The additional results developed here are:
+\begin{enumerate}
+ \item the determinant identity \(\lvert\det M^{(j)}\rvert=2j+1\);
  \item positivity of all sector eigenvalues together with
  \((M^{(j)})^{-1}\log\bm\eta\geq0\) is necessary and sufficient for
- endpoint embeddability, yielding explicit facets through spin \(2\);
+ covariant endpoint embeddability, yielding explicit logarithmic-cone
+ facets through spin \(2\);
+ \item the exact Euclidean volume of the embeddable region and exact
+ low-spin comparison polytopes;
  \item the same inequalities applied to
  \(d(\log|\bm\eta(t)|)/dt\) characterize all invertible differentiable
- covariant CP-divisible paths, including paths on fixed negative-spectrum
- branches.
+ covariant CP-divisible channel paths under Definition~\ref{def:cp-divisibility},
+ including fixed negative-spectrum branches.
 \end{enumerate}
 The static channel simplex, its sector eigenvalue transform, and the
-isotropic generator--relaxation-rate transform are starting points
-supplied by the cited literature.  The present contribution places them
+isotropic generator--relaxation-rate transform are taken from the cited
+literature.  The present contribution places them
 in one Hilbert--Schmidt normalization, gives a self-contained
 recoupling derivation, obtains \(\lvert\det M^{(j)}\rvert=2j+1\),
 formulates the exponential endpoint cone, lists its spin-\(3/2\) and
-spin-\(2\) facets, proves the fixed-sign CP-divisibility criterion, and
+spin-\(2\) logarithmic-cone facets, proves the fixed-sign CP-divisibility
+criterion, and
 derives exact volume and polytope certificates.  All displayed low-spin
 matrices and polytope intersections have exact symbolic certificates;
 floating-point values are used only to render sampled boundary curves
@@ -259,6 +279,22 @@ defines the unitary representation
   \cU_g(X)=U_j(g)XU_j(g)^\dagger
   \quad\text{on }B(\mathcal H_j).
 \]
+
+\begin{definition}[Dynamical conventions]\label{def:dynamical-conventions}
+A channel on a finite-dimensional matrix algebra is a complex-linear,
+completely positive, trace-preserving map; all channels below are written
+in the Schr\"odinger picture.  A linear map \(A:B(\mathcal H_j)\to
+B(\mathcal H_j)\) is \(\SU\)-covariant when
+\begin{equation}\label{eq:covariance-definition}
+ A\circ\cU_g=\cU_g\circ A\qquad(g\in\SU).
+\end{equation}
+A norm-continuous quantum Markov semigroup is a family
+\(\{e^{t\cL}\}_{t\geq0}\) of channels satisfying the semigroup law.
+Its generator \(\cL\) is covariant when it satisfies
+\eqref{eq:covariance-definition}, equivalently when every
+\(e^{t\cL}\) is covariant.
+\end{definition}
+
 The Clebsch--Gordan decomposition is multiplicity free:
 \begin{equation}\label{eq:adjoint-decomposition}
   B(\mathcal H_j)\cong \mathcal H_j\otimes\mathcal H_j^*
@@ -308,7 +344,7 @@ adjoint relation in \eqref{eq:tensor-transform} permutes the summands
 of the two sums, giving the second identity.
 \end{proof}
 
-\begin{definition}[Invariant dissipators]\label{def:dissipators}
+\begin{definition}[Covariant rank dissipators]\label{def:dissipators}
 For \(1\leq k\leq2j\), define
 \begin{align}
  \cD_k(X)
@@ -449,9 +485,9 @@ follows by comparing \eqref{eq:dissipator-simplified} and
 \eqref{eq:vertex-channel}.
 \end{proof}
 
-\section{Classification of invariant generators}
+\section{Classification of covariant generators}
 
-\begin{theorem}[Invariant-generator decomposition]
+\begin{theorem}[Covariant-generator decomposition]
 \label{thm:generator-classification}
 A linear map \(\cL:B(\mathcal H_j)\to B(\mathcal H_j)\) generates a
 norm-continuous \(\SU\)-covariant quantum Markov semigroup if and only if
@@ -473,10 +509,15 @@ version of \cite[Eqs.~(2.8) and (2.11)]{GoriniVerriSudarshan1980}.
 
 \begin{proof}
 Choose the tensors \(T_q^{(k)}\), \(1\leq k\leq2j\), as an orthonormal
-basis of the traceless operators.  The canonical finite-dimensional
-Gorini--Kossakowski--Sudarshan representation
+basis of the traceless operators.  Although the spherical tensors need
+not be self-adjoint, they are related to any self-adjoint
+Hilbert--Schmidt orthonormal basis by a unitary basis change.  Under that
+change the GKS matrix is conjugated unitarily, so its positivity and the
+uniqueness of the canonical traceless data are preserved.  The canonical
+finite-dimensional Gorini--Kossakowski--Sudarshan--Lindblad representation,
+as stated in
 \cite[Theorem~2.2 and Lemma~2.3]{GoriniKossakowskiSudarshan1976}
-gives unique data
+(see also \cite[Theorem~2]{Lindblad1976}), gives unique data
 \(H=H^\dagger\), \(\Tr H=0\), and a positive semidefinite matrix \(C\)
 on the traceless operator space such that
 \begin{equation}\label{eq:canonical-gks}
@@ -581,7 +622,7 @@ It satisfies
 \(\sum_qT_q^{(k)}\otimes\overline{T_q^{(k)}}\).
 
 In the angular-momentum basis and its dual, the matrix of \(\beta\) is
-the matrix \(V\) of the rotation by \(\pi\) about the \(y\)-axis in
+the rotation-by-\(\pi\) matrix about the \(y\)-axis in
 \cite[Eq.~(3.10)]{Breuer2005}, up to an overall phase which cancels
 under conjugation.  Self-duality of the spin representation is the
 matrix identity
@@ -732,8 +773,10 @@ the orthogonality relation used here is
  =\frac{\delta_{kk'}}{w_k}.
 \end{equation}
 It is the \(j_1=j_2=j\) specialization of the sum rule following
-\cite[Eq.~(2.14)]{Breuer2005}, and it says that \(L\) is orthogonal.
-Tetrahedral symmetry and \eqref{eq:vertex-eigenvalues} give
+\cite[Eq.~(2.14)]{Breuer2005}; see also
+\cite[Sec.~34.5(iv)]{NISTDLMF}.  It says that \(L\) is orthogonal.
+The tetrahedral symmetry in \cite[Sec.~34.5(ii)]{NISTDLMF} and
+\eqref{eq:vertex-eigenvalues} give
 \begin{equation}\label{eq:V-factorization}
  V=(n+1)W^{-1/2}L^{\mathsf T}W^{-1/2}S,
  \qquad
@@ -844,7 +887,7 @@ makes \(\cL\) a covariant GKSL generator.  The maps \(e^{\cL}\) and
 \eqref{eq:adjoint-decomposition}; therefore they are equal.
 \end{proof}
 
-\begin{corollary}[General logarithmic facets and multiplicative geometry]
+\begin{corollary}[General logarithmic-cone facets and multiplicative geometry]
 \label{cor:general-facets}
 For a covariant channel with positive sector eigenvalues, define
 \begin{equation}\label{eq:general-integrated-rates}
@@ -878,7 +921,7 @@ Equation~\eqref{eq:general-integrated-rates} is
 Theorem~\ref{thm:endpoint-criterion}.  In logarithmic coordinates,
 the two operations in \eqref{eq:multiplicative-geometry} add the
 integrated rates and take their convex combinations, respectively.
-Both preserve \(\Rplus^{2j}\).  Equivalently, all invariant generators
+Both preserve \(\Rplus^{2j}\).  Equivalently, all covariant generators
 commute because they are diagonal on the tensor-rank sectors, so the
 corresponding exponentials compose by addition of their rates.
 \end{proof}
@@ -915,6 +958,34 @@ become \((-3,5)\) and \((3,-1)\) in decay-rate coordinates, which is
 equivalent to \eqref{eq:historical-spin-one-rates}.
 \end{proof}
 
+\begin{center}
+\begin{minipage}{\textwidth}
+\centering\small
+\begin{tabular}{c p{1.55in} p{3.05in}}
+\hline
+symbol & role & defining relation \\ \hline
+\(p_k\) & channel-simplex weight
+  & \(\Phi=\sum_kp_k\cE_k\), \(p_k\geq0\), \(\sum_kp_k=1\) \\
+\(\alpha_k\) & static channel weight
+  & \(p_k=(2k+1)\alpha_k\)
+    \cite[Eqs.~(26)--(31)]{RudnickiKlimovMunozLeuchsSanchezSoto2026} \\
+\(\gamma_k\) & generator rate
+  & \(\cL=\sum_{k\geq1}\gamma_k\cD_k\), \(\gamma_k\geq0\) \\
+\(\lambda_\ell\) & generator eigenvalue on \(V_\ell\)
+  & \(\bm\lambda=M^{(j)}\bm\gamma\) \\
+\(\eta_\ell\) & channel eigenvalue on \(V_\ell\)
+  & \(\eta_\ell=e^{t\lambda_\ell}\) for a semigroup endpoint \\
+\(r_k\) & integrated generator rate
+  & \(\bm r=(M^{(j)})^{-1}\log\bm\eta=t\bm\gamma\) \\
+\(\chi_\ell\) & historical sector decay rate
+  & \(\chi_\ell=-t^{-1}\log\eta_\ell\) \\ \hline
+\end{tabular}
+\captionsetup{hypcap=false}
+\captionof{table}{Weight, rate, and sector-eigenvalue conventions used in the paper.}
+\label{tab:notation-dictionary}
+\end{minipage}
+\end{center}
+
 \begin{proposition}[Poisson collision representation]
 \label{prop:poisson-collision}
 For \(r_k\geq0\), put \(a_k=(2k+1)r_k/d\).  The semigroup endpoint
@@ -928,7 +999,7 @@ with integrated rates \(r=(r_1,\ldots,r_{2j})\) factors as
 \end{equation}
 Thus each extreme generator ray is the continuous-time Poissonization
 of repeated applications of one Clebsch--Gordan vertex channel, and a
-general invariant semigroup is the product of these commuting
+general covariant semigroup is the product of these commuting
 processes.
 \end{proposition}
 
@@ -1174,11 +1245,11 @@ Substitution of \(j=1\) and \(j=3/2\) in
 \eqref{eq:vertex-eigenvalues} gives
 \eqref{eq:spin-one-simplex} and \eqref{eq:spin-three-simplex}.
 For the nonnegative-spectrum intersections, write a point as
-\(\eta=V\lambda\), where the columns of \(V\) are the displayed
-simplex vertices and \(\lambda_k\geq0\), \(\sum_k\lambda_k=1\).
+\(\eta=V\bm p\), where the columns of \(V\) are the displayed
+simplex vertices and \(p_k\geq0\), \(\sum_kp_k=1\).
 A vertex of the intersection with \(\eta_\ell\geq0\) is the unique
 solution of a full-rank selection of the bounding equalities
-\(\lambda_k=0\) and \(\eta_\ell=0\).  The exact enumeration in
+\(p_k=0\) and \(\eta_\ell=0\).  The exact enumeration in
 \texttt{code/generate\_plot\_data.py} solves every such rational
 system and tests all remaining inequalities.  Its certificate
 \texttt{paper/generated/geometry\_exact.txt} is
@@ -1316,12 +1387,25 @@ remain the exact description.
 
 \section{Differentiable CP-divisible paths}
 
-\begin{definition}[CP-divisibility]
-A family of channels \(\{\Phi_t\}_{t\in I}\) is CP-divisible if for
-every \(s\leq t\) in \(I\) there is a channel \(V_{t,s}\) such that
-\(\Phi_t=V_{t,s}\Phi_s\).
-No distinguished identity time is required in this definition.  When
-\(\Phi_{t_0}=\id\), we call the family identity based at \(t_0\).
+\begin{definition}[CP-divisibility]\label{def:cp-divisibility}
+Let \(I\subset\mathbb R\) be a nondegenerate interval.  A family of
+channels \(\{\Phi_t\}_{t\in I}\) is CP-divisible if there are channels
+\(\cV_{t,s}\) for every \(s\leq t\) in \(I\) such that
+\begin{equation}\label{eq:propagator-convention}
+ \Phi_t=\cV_{t,s}\Phi_s,\qquad
+ \cV_{t,t}=\id,\qquad
+ \cV_{u,t}\cV_{t,s}=\cV_{u,s}\quad(s\leq t\leq u).
+\end{equation}
+No distinguished identity time is required in this channel-path
+definition.  When \(\Phi_{t_0}=\id\), we call the family identity-based
+at \(t_0\).  For the invertible paths considered below, the first
+identity in \eqref{eq:propagator-convention} uniquely determines the
+propagators, and the other two identities follow.
+A \(C^1\) path on \(I\) below has a continuous derivative in the
+interior, with the corresponding one-sided continuous derivative at
+each included endpoint.  Norms of superoperators, including those in
+remainder and convergence statements, are the operator norms induced
+by the Hilbert--Schmidt norm.
 \end{definition}
 
 \begin{lemma}[Compressed-Choi characterization]
@@ -1380,10 +1464,19 @@ Choi matrix of left or right multiplication has
 \(|\Omega\rangle\) on one side.
 
 Let \(R=K-D_C\).  Then \(J(R)\) is Hermitian and \(QJ(R)Q=0\).
-Its block matrix relative to
-\(\mathbb C\Omega\oplus\Omega^\perp\) consequently has zero
-lower-right block.  Absorbing its scalar upper-left block into a
-multiple of \(I\), there is an \(A\in B(\mathbb C^d)\) such that
+Put \(e_0=\Omega/\sqrt d\).  Relative to
+\(\mathbb Ce_0\oplus\Omega^\perp\), there are \(a\in\mathbb R\) and
+\(z\in\Omega^\perp\) such that
+\begin{equation*}
+ J(R)=a|e_0\rangle\langle e_0|
+      +|z\rangle\langle e_0|+|e_0\rangle\langle z|.
+\end{equation*}
+Choose \(A\in B(\mathbb C^d)\) by
+\begin{equation*}
+ |A\rangle\!\rangle=\frac{a}{2\sqrt d}|e_0\rangle
+                      +\frac1{\sqrt d}|z\rangle.
+\end{equation*}
+Since \(|I\rangle\!\rangle=\sqrt d\,|e_0\rangle\), this gives
 \begin{equation*}
  J(R)=|A\rangle\!\rangle\langle\!\langle I|
       +|I\rangle\!\rangle\langle\!\langle A|.
@@ -1419,22 +1512,22 @@ is a GKSL generator for every \(t\).
 
 \begin{proof}
 If the path is CP-divisible, invertibility makes the propagator unique:
-\(V_{t+h,t}=\Phi_{t+h}\Phi_t^{-1}\).  It is a channel and
+\(\cV_{t+h,t}=\Phi_{t+h}\Phi_t^{-1}\).  It is a channel and
 \begin{equation*}
- V_{t+h,t}=\id+hK_t+o(h).
+ \cV_{t+h,t}=\id+hK_t+o(h).
 \end{equation*}
 Let \(\Omega=\sum_{a=1}^d e_a\otimes e_a\), use the unnormalized
 Choi convention \(J(A)=\sum_{a,b}A(|e_a\rangle\langle e_b|)\otimes
 |e_a\rangle\langle e_b|\), and take
-\(\psi\perp\Omega\).  Since \(J(V_{t+h,t})\geq0\),
+\(\psi\perp\Omega\).  Since \(J(\cV_{t+h,t})\geq0\),
 \begin{equation}\label{eq:choi-tangent-condition}
- 0\leq \langle\psi,J(V_{t+h,t})\psi\rangle
+ 0\leq \langle\psi,J(\cV_{t+h,t})\psi\rangle
  =h\langle\psi,J(K_t)\psi\rangle+o(h).
 \end{equation}
 Division by \(h>0\) and passage to the limit show that
 \(J(K_t)\) is nonnegative on \(\Omega^\perp\).  Differentiating the
 trace-preserving and Hermiticity-preserving identities for
-\(V_{t+h,t}\) gives
+\(\cV_{t+h,t}\) gives
 \begin{equation*}
  \Tr K_t(X)=0,
  \qquad K_t(X^\dagger)=K_t(X)^\dagger.
@@ -1449,12 +1542,12 @@ positive-semidefinite matrix cone is closed.
 Conversely, suppose every \(K_t\) is a GKSL generator.  Put
 \(\Delta=(t-s)/n\).  The chronological Euler products
 \begin{equation*}
- V^{(n)}_{t,s}=
+ \cV^{(n)}_{t,s}=
  \exp(\Delta K_{s+(n-1)\Delta})\cdots
  \exp(\Delta K_{s+\Delta})\exp(\Delta K_s)
 \end{equation*}
 converge in operator norm to the solution of
-\(\partial_tV_{t,s}=K_tV_{t,s}\), \(V_{s,s}=\id\).  Indeed, if
+\(\partial_t\cV_{t,s}=K_t\cV_{t,s}\), \(\cV_{s,s}=\id\).  Indeed, if
 \(B=\sup_{u\in[s,t]}\|K_u\|\) and
 \begin{equation*}
  \omega_K(\delta)=
@@ -1464,15 +1557,15 @@ converge in operator norm to the solution of
 then variation of constants between the exact solution and the
 piecewise-constant evolution gives
 \begin{equation*}
- \|V_{t,s}-V^{(n)}_{t,s}\|
+ \|\cV_{t,s}-\cV^{(n)}_{t,s}\|
  \leq (t-s)e^{B(t-s)}\omega_K(\Delta)\longrightarrow0.
 \end{equation*}
 Every factor is a channel, and the cone of completely positive maps
 and the trace-preserving affine subspace are operator-norm closed.
-Hence \(V_{t,s}\) is a channel.  Finally, both \(\Phi_t\) and
-\(V_{t,s}\Phi_s\) solve \(\dot Y_t=K_tY_t\) with initial value
+Hence \(\cV_{t,s}\) is a channel.  Finally, both \(\Phi_t\) and
+\(\cV_{t,s}\Phi_s\) solve \(\dot Y_t=K_tY_t\) with initial value
 \(Y_s=\Phi_s\); uniqueness for finite-dimensional linear ODEs gives
-\(\Phi_t=V_{t,s}\Phi_s\).
+\(\Phi_t=\cV_{t,s}\Phi_s\).
 \end{proof}
 
 \begin{theorem}[Instantaneous logarithmic cone]
@@ -1527,7 +1620,8 @@ Corollary~\ref{cor:spin-one-half} gives
 reduces to the displayed inequality.  The constant vertex path has
 zero logarithmic derivative, and its propagators are the identity
 channel.  It is therefore a CP-divisible channel-valued path in the
-sense of Definition~7.1, but it is not identity based.
+sense of Definition~\ref{def:cp-divisibility}, but it is not
+identity-based.
 \end{proof}
 
 \section{Exact computation and reproducibility}
@@ -1539,8 +1633,7 @@ direct matrix operations on the tensors in
 normalization checks observable rather than folding them into a single
 table lookup; it is not a claim of independent software implementations.
 
-\begin{proposition}[Exact reconstruction protocol]
-\label{prop:exact-reconstruction}
+\begin{remark}[Exact reconstruction protocol]
 For \(2j=1,2,3,4\), the repository's exact-cone script performs all of
 the following operations in symbolic arithmetic:
 \begin{enumerate}
@@ -1567,11 +1660,9 @@ the following operations in symbolic arithmetic:
 \end{enumerate}
 The primitive integer rows printed by the script are exactly the facet
 normals in the spin-\(1\), spin-\(3/2\), and spin-\(2\) corollaries.
-\end{proposition}
-
-\begin{proof}
-The tensor and Wigner routines return SymPy algebraic numbers, and the
-tests use exact matrix equality after symbolic simplification.  The
+The tensor and Wigner routines return SymPy algebraic numbers
+\cite{MeurerEtAl2017}, and the tests use exact matrix equality after
+symbolic simplification.  The
 direct Kraus reconstruction does not call the \(6j\)-based generator
 routine.  For every \((\ell,m,k)\), it checks the complete matrix
 residual and then compares the scalar with \eqref{eq:M-definition}.
@@ -1585,10 +1676,9 @@ implementation.  The executable check is
 \begin{equation*}
  \texttt{python3 -u code/exact\_cones.py 1 2 3 4 --verify}.
 \end{equation*}
-\end{proof}
+\end{remark}
 
-\begin{proposition}[Exact polytope certificates]
-\label{prop:exact-polytope-certificates}
+\begin{remark}[Exact polytope certificates]
 The script \texttt{code/generate\_plot\_data.py} enumerates every
 full-rank active set of the spin-\(1\) and spin-\(3/2\) simplex
 halfspaces together with \(\eta_\ell\geq0\), solves the systems over
@@ -1598,9 +1688,6 @@ Jacobian volumes in \texttt{paper/generated/geometry\_exact.txt}.
 The only floating-point data produced by the script are plotting
 coordinates: the spin-\(1\) curves and the truncated spin-\(3/2\)
 boundary meshes.
-\end{proposition}
-
-\begin{proof}
 There are finitely many choices of as many active inequalities as the
 ambient dimension.  A polytope vertex occurs in at least one full-rank
 choice.  The script iterates over all choices, discards singular systems,
@@ -1612,11 +1699,13 @@ those cycles and every rational determinant term in the shoelace and
 pyramid sums, so no floating-point decision enters a stated area or
 volume.  This is the active-set argument used in
 Proposition~\ref{prop:comparison-polytopes}.
-\end{proof}
+\end{remark}
 
 From the repository root, \texttt{make check} runs the exact tensor
 audit, \texttt{make figures} regenerates all plot data and certificates,
 and \texttt{make paper} rebuilds the figures, bibliography, and paper.
+Both Python entry points accept \texttt{-h} and \texttt{--help} and exit
+without generating or changing artifacts.
 
 \section{Conclusion}
 
@@ -1629,7 +1718,8 @@ exponents by \(M^{(j)}\).  Its orthogonality gives the inverse
 \eqref{eq:M-inverse-formula}, while the additional determinant identity
 and componentwise exponential turn this rate cone into an endpoint
 criterion.  Time-dependent CP-divisibility is the pointwise version of
-the same test applied to logarithms of absolute sector eigenvalues.  The
+the same test applied to the logarithmic derivatives of the
+componentwise absolute sector eigenvalues.  The
 low-spin corollaries and comparison plots distinguish complete
 positivity, sectorwise nonnegativity, and covariant Markovian
 embeddability.
@@ -1650,9 +1740,13 @@ computation, and passage of text.
 The source, exact verification scripts, generated rational certificates,
 plotting data, and build instructions are available in the
 \href{https://github.com/skypher/su2-markovian-embeddability}{project
-repository}.  The version accompanying this manuscript is the tagged
+repository}.  The initial public manuscript release is available under the
 \href{https://github.com/skypher/su2-markovian-embeddability/tree/v1.0.0}
-{\texttt{v1.0.0} release}.
+{\texttt{v1.0.0} tag}; subsequent revisions, including this manuscript,
+are identified by the repository history.  Machine-readable citation
+metadata and the
+repository reuse terms are recorded in \texttt{CITATION.cff} and
+\texttt{LICENSE}, respectively.
 The saved
 exact-reconstruction transcript
 \texttt{paper/generated/exact\_check.txt} has SHA-256 digest

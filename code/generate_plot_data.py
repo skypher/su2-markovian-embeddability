@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import itertools
 import math
 from functools import cmp_to_key
@@ -222,30 +223,54 @@ def _write_faces(path: Path, faces: list[list[tuple]], style: str) -> None:
 
 def _write_markov_surface(
     path: Path,
+    cutoff_path: Path,
     matrix: Matrix,
     fixed_rate: int,
     grid_size: int = 33,
     maximum_rate: float = 8.0,
 ) -> None:
     varying = [index for index in range(3) if index != fixed_rate]
+
+    def endpoint(rate_a: float, rate_b: float) -> tuple[float, ...]:
+        rates = [0.0, 0.0, 0.0]
+        rates[varying[0]] = rate_a
+        rates[varying[1]] = rate_b
+        logarithms = [
+            sum(float(matrix[ell, k]) * rates[k] for k in range(3))
+            for ell in range(3)
+        ]
+        return tuple(math.exp(value) for value in logarithms)
+
     with path.open("w", encoding="utf-8") as handle:
         for row in range(grid_size):
             rate_a = maximum_rate * row / (grid_size - 1)
             for column in range(grid_size):
                 rate_b = maximum_rate * column / (grid_size - 1)
-                rates = [0.0, 0.0, 0.0]
-                rates[varying[0]] = rate_a
-                rates[varying[1]] = rate_b
-                logarithms = [
-                    sum(float(matrix[ell, k]) * rates[k] for k in range(3))
-                    for ell in range(3)
-                ]
                 handle.write(
-                    " ".join(f"{math.exp(value):.12g}" for value in logarithms)
+                    " ".join(f"{value:.12g}" for value in endpoint(rate_a, rate_b))
                     + "\n"
                 )
             if row + 1 < grid_size:
                 handle.write("\n")
+
+    with cutoff_path.open("w", encoding="utf-8") as handle:
+        for index in range(grid_size):
+            rate = maximum_rate * index / (grid_size - 1)
+            handle.write(
+                " ".join(
+                    f"{value:.12g}" for value in endpoint(maximum_rate, rate)
+                )
+                + "\n"
+            )
+        handle.write("nan nan nan\n")
+        for index in range(grid_size):
+            rate = maximum_rate * index / (grid_size - 1)
+            handle.write(
+                " ".join(
+                    f"{value:.12g}" for value in endpoint(rate, maximum_rate)
+                )
+                + "\n"
+            )
 
 
 def _write_exact_summary(path: Path) -> None:
@@ -321,7 +346,18 @@ def _write_exact_summary(path: Path) -> None:
                 handle.write("\n")
 
 
+def _parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description=(
+            "Generate exact low-spin polytope certificates and sampled "
+            "semigroup surfaces for the manuscript."
+        )
+    )
+    return parser.parse_args()
+
+
 def main() -> None:
+    _parse_args()
     GENERATED.mkdir(parents=True, exist_ok=True)
 
     spin_one_vertices = vertex_matrix(2)
@@ -346,18 +382,25 @@ def main() -> None:
     _write_faces(
         GENERATED / "spin3_full_faces.tex",
         full_faces,
-        "draw=gray!80,fill=gray!35,fill opacity=0.22,line width=0.35pt",
+        (
+            "draw=gray!80,fill=gray!35,fill opacity=0.22,"
+            "line width=0.35pt,forget plot"
+        ),
     )
     _write_faces(
         GENERATED / "spin3_positive_faces.tex",
         positive_faces,
-        "draw=orange!85!black,fill=orange!55,fill opacity=0.28,line width=0.35pt",
+        (
+            "draw=orange!85!black,fill=orange!55,fill opacity=0.28,"
+            "line width=0.35pt,forget plot"
+        ),
     )
 
     matrix = generator_matrix(3)
     for fixed_rate in range(3):
         _write_markov_surface(
             GENERATED / f"spin3_markov_face_{fixed_rate + 1}.dat",
+            GENERATED / f"spin3_markov_face_{fixed_rate + 1}_cutoff.dat",
             matrix,
             fixed_rate,
         )

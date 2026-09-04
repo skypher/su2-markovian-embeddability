@@ -175,6 +175,14 @@ Every vertex is marked; the identity vertex is starred.}
 ]
 \input{generated/spin3_positive_faces.tex}
 \addplot3[
+  only marks,
+  mark=*,
+  mark size=0.32pt,
+  color=cbBlue,
+  opacity=0.16,
+] table {generated/spin3_markov_interior.dat};
+\addlegendentry{sampled embeddable interior}
+\addplot3[
   mesh,
   draw=cbBlue,
   opacity=0.82,
@@ -216,20 +224,22 @@ Every vertex is marked; the identity vertex is starred.}
   only marks,mark=*,mark size=1.5pt,
   mark options={draw=black,fill=black},
 ] coordinates {(0.367879441171,0.367879441171,0.367879441171)};
-\addlegendentry{embeddable interior point}
+\addlegendentry{reference interior point}
 \addplot3[only marks,mark=*,mark size=0.9pt] coordinates {(1,1,1)};
 \end{axis}
 \end{tikzpicture}
 
 \end{minipage}
-\caption{Spin \(3/2\) embeddable geometry.  The three boundary meshes are
-overlaid on the orange nonnegative-spectrum polytope and are distinguished
-by color and line style; each label names the canonical rate set to zero.
-The embeddable region is the common side of the sheets containing the
-marked diagonal point \(e^{-1}(1,1,1)\).  The exact region is defined by
+\caption{Spin \(3/2\) embeddable geometry.  The translucent blue point cloud
+samples strictly positive canonical rates and makes visible the common
+feasible side of the three boundary meshes.  The meshes are overlaid on the
+orange nonnegative-spectrum polytope and are distinguished by color and line
+style; each label names the canonical rate set to zero.  The marked diagonal
+point is \(e^{-1}(1,1,1)\).  The exact region is defined by
 inequalities \eqref{eq:spin-three-halves-facet-one}--
 \eqref{eq:spin-three-halves-facet-three}.  For rendering, the two free
 rates on each mesh range over \([0,8]\); the gray dotted edges are sampling
-cutoffs, not mathematical boundaries.}
+cutoffs, and the point cloud is sampled data; neither is part of the
+mathematical boundary.}
 \label{fig:spin-three-halves-regions}
 \end{figure}

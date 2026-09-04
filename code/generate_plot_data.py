@@ -44,10 +44,13 @@ def _evaluate(halfspace: tuple, point: tuple):
     return simplify(sum(a * x for a, x in zip(normal, point)) + offset)
 
 
-def _intersection_vertices(vertices: Matrix, positive_spectrum: bool) -> tuple:
+def _intersection_vertex_active_sets(
+    vertices: Matrix, positive_spectrum: bool
+) -> tuple:
+    """Return each feasible vertex and every full-rank active set yielding it."""
     dimension = vertices.rows
     halfspaces = _halfspaces(vertices, positive_spectrum)
-    points = set()
+    certificates: dict[tuple, list[tuple[int, ...]]] = {}
     for active in itertools.combinations(range(len(halfspaces)), dimension):
         coefficient = Matrix([halfspaces[index][0] for index in active])
         if coefficient.det() == 0:
@@ -56,8 +59,28 @@ def _intersection_vertices(vertices: Matrix, positive_spectrum: bool) -> tuple:
         solution = coefficient.inv() * rhs
         point = tuple(simplify(entry) for entry in solution)
         if all(_evaluate(halfspace, point) >= 0 for halfspace in halfspaces):
-            points.add(point)
-    return tuple(sorted(points))
+            certificates.setdefault(point, []).append(active)
+    return tuple(
+        (point, tuple(certificates[point])) for point in sorted(certificates)
+    )
+
+
+def _intersection_vertices(vertices: Matrix, positive_spectrum: bool) -> tuple:
+    return tuple(
+        point
+        for point, _ in _intersection_vertex_active_sets(
+            vertices, positive_spectrum
+        )
+    )
+
+
+def _active_halfspace_names(
+    dimension: int, positive_spectrum: bool
+) -> tuple[str, ...]:
+    names = tuple(f"p_{index}=0" for index in range(dimension + 1))
+    if positive_spectrum:
+        names += tuple(f"eta_{index + 1}=0" for index in range(dimension))
+    return names
 
 
 def _dot(left: tuple, right: tuple):
@@ -273,6 +296,26 @@ def _write_markov_surface(
             )
 
 
+def _write_markov_interior(
+    path: Path,
+    matrix: Matrix,
+    maximum_rate: float = 4.0,
+) -> None:
+    """Sample strictly positive rate triples to show the feasible side of meshes."""
+    rate_fractions = (0.005, 0.02, 0.05, 0.1125, 0.2125, 0.35, 0.6, 1.0)
+    rate_values = [maximum_rate * fraction for fraction in rate_fractions]
+    with path.open("w", encoding="utf-8") as handle:
+        for rates in itertools.product(rate_values, repeat=3):
+            logarithms = [
+                sum(float(matrix[ell, k]) * rates[k] for k in range(3))
+                for ell in range(3)
+            ]
+            handle.write(
+                " ".join(f"{math.exp(value):.12g}" for value in logarithms)
+                + "\n"
+            )
+
+
 def _write_exact_summary(path: Path) -> None:
     with path.open("w", encoding="utf-8") as handle:
         for twice_j in (2, 3, 4):
@@ -290,11 +333,22 @@ def _write_exact_summary(path: Path) -> None:
             handle.write(f"column_decays={column_decays}\n")
             handle.write(f"embeddable_eigenvalue_volume={volume}\n")
             if twice_j in (2, 3):
-                points = _intersection_vertices(vertices, True)
+                vertex_certificates = _intersection_vertex_active_sets(
+                    vertices, True
+                )
+                points = tuple(point for point, _ in vertex_certificates)
                 augmented_inverse = vertices.col_join(
                     Matrix.ones(1, twice_j + 1)
                 ).inv()
                 handle.write(f"positive_spectrum_vertices={points}\n")
+                halfspace_names = _active_halfspace_names(twice_j, True)
+                handle.write("positive_vertex_active_sets=\n")
+                for point, active_sets in vertex_certificates:
+                    named_active_sets = tuple(
+                        tuple(halfspace_names[index] for index in active)
+                        for active in active_sets
+                    )
+                    handle.write(f"  {point}: {named_active_sets}\n")
                 handle.write("positive_vertex_barycentric_coordinates=\n")
                 for point in points:
                     barycentric = augmented_inverse * Matrix([*point, 1])
@@ -383,8 +437,8 @@ def main() -> None:
         GENERATED / "spin3_full_faces.tex",
         full_faces,
         (
-            "draw=black!72,fill=gray!38,fill opacity=0.34,"
-            "line width=0.65pt,forget plot"
+            "draw=black!78,fill=gray!42,fill opacity=0.44,"
+            "line width=0.8pt,forget plot"
         ),
     )
     _write_faces(
@@ -404,11 +458,15 @@ def main() -> None:
             matrix,
             fixed_rate,
         )
+    _write_markov_interior(
+        GENERATED / "spin3_markov_interior.dat",
+        matrix,
+    )
 
     _write_exact_summary(GENERATED / "geometry_exact.txt")
     print(
         "generated spin-1 polygons, spin-3/2 polyhedra, and "
-        "three Markovian boundary meshes",
+        "three Markovian boundary meshes with interior samples",
         flush=True,
     )
 

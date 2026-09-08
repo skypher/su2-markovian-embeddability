@@ -92,8 +92,8 @@ the exact Euclidean volume
   transcript.
 - `ROADMAP.md`: theorem-slot acceptance ledger and source map.
 
-The earlier review snapshot is archived under the `v1.1.0` tag; subsequent
-revisions are identified by their repository commits.
+The manuscript and artifacts for the arXiv submission are archived under
+the [`v1.2.0` tag](https://github.com/skypher/su2-markovian-embeddability/tree/v1.2.0).
 
 ## Reproduce
 

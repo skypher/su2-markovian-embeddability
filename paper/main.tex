@@ -87,7 +87,7 @@
 \author{Leslie P. Polzer}
 \newcommand{\authoraffiliation}{Independent Researcher}
 \newcommand{\authoremail}{polzer@fastmail.com}
-\date{September 4, 2026}
+\date{September 8, 2026}
 
 \makeatletter
 \renewcommand{\section}{%
@@ -145,22 +145,24 @@
 \maketitle
 
 \begin{abstract}
-For a fixed irreducible spin representation, we express the known
-isotropic-spin generator classification and Wigner \(6j\) rate transform
-in Hilbert--Schmidt normalized channel coordinates.  A covariant channel
-with spectrum \(\bm\eta=(\eta_1,\ldots,\eta_{2j})\) on the nontrivial tensor
-sectors is a finite-time endpoint of a covariant quantum Markov semigroup if
-and only if every component is positive and
-\((M^{(j)})^{-1}\log\bm\eta\geq0\).  We derive the determinant
-magnitude of \(M^{(j)}\), logarithmic endpoint inequalities through spin
-\(2\), and the exact volume of the embeddable region for every spin.  For
-identity-normalized invertible differentiable covariant channel families,
-the same cone characterizes CP-divisibility through the instantaneous
-logarithmic derivatives of the sector eigenvalues.  For the broader class of
-nonidentity-normalized channel families specified below, the statement uses
-\(\log|\bm\eta|\).
-Exact symbolic certificates accompany the low-spin matrices, polytopes,
-and volumes.
+We characterize which channels on a fixed irreducible spin space are
+finite-time endpoints of \(\mathrm{SU}(2)\)-covariant quantum Markov
+semigroups.  Let \(M^{(j)}\) take nonnegative generator rates to the
+generator's eigenvalues on tensor sectors.  A covariant channel with nontrivial
+sector spectrum \(\bm\eta\) is such an endpoint if and only if every
+\(\eta_\ell>0\) and \((M^{(j)})^{-1}\log\bm\eta\geq0\).
+We obtain this formulation from the classical isotropic-spin generator
+classification and Wigner \(6j\) rate transform, expressed in
+Hilbert--Schmidt normalized coordinates.  We derive explicit logarithmic
+inequalities through spin \(2\), the identity
+\(\lvert\det M^{(j)}\rvert=2j+1\), and the embeddable-region volume
+\((2j+1)/(2^{2j}(2j)!)\) in sector-eigenvalue coordinates for every spin.
+For invertible differentiable covariant channel families starting at the
+identity, the same cone characterizes CP-divisibility through instantaneous
+logarithmic derivatives.  For families that need not start at the identity,
+the criterion uses logarithms of the absolute sector eigenvalues.
+Exact symbolic certificates and reproducible plots accompany the low-spin
+matrices, comparison polytopes, and volumes.
 
 \vskip5pt
 \noindent\textbf{Keywords.}\enspace \(\mathrm{SU}(2)\)-covariant quantum channels;
@@ -184,6 +186,18 @@ with matrix logarithm branches and conditional complete positivity
 substantially when it forces both the channel and the generator to be
 scalar on a multiplicity-free decomposition.
 
+Here covariance is required of the generator as well as its endpoint:
+``embeddable'' always means embeddable by an \(\SU\)-covariant GKSL
+generator.  We use the classical generator classification and inverse
+relaxation-rate transform to formulate an endpoint test in channel
+eigenvalues (Theorem~\ref{thm:endpoint-criterion}), give explicit
+inequalities through spin \(2\), and derive the volume of the embeddable
+region for every spin (Proposition~\ref{prop:embeddable-volume}).
+The corresponding instantaneous test characterizes invertible
+CP-divisible covariant channel families
+(Theorem~\ref{thm:path-criterion}).  The endpoint test makes no assertion
+about noncovariant logarithms of the same channel.
+
 For irreducible \(\SU\) representations, the static channel geometry
 is explicit.  Al Nuwairan introduced a family called the EPOSIC channels
 and proved that they are precisely
@@ -198,13 +212,7 @@ irreducible tensor operators
 \cite[Theorem~7 and Appendix~B]{CirstoiuKorzekwaJennings2020}.
 Aschieri, Ruba, and Solovej developed quantitative large-spin
 approximations and trace formulas for this simplex
-\cite[Sec.~1]{AschieriRubaSolovej2024}.  Recent work on Weyl dynamical
-maps gives semigroup and non-Markovianity criteria in a different
-covariant family \cite[Proposition~2]{XuJagadish2026}.
-In the same Weyl-covariant setting, Shahbeigi, Amaro-Alcal{\'a},
-Pucha{\l}a, and \.{Z}yczkowski describe the log-convex geometry and
-volume of accessible channels
-\cite[Corollary~4, Sec.~IV, and Eq.~(68)]{ShahbeigiEtAl2021}.
+\cite[Sec.~1]{AschieriRubaSolovej2024}.
 Rudnicki, Klimov, Mu{\~n}oz, Leuchs, and S{\'a}nchez-Soto give a recent
 Choi--Kraus characterization of the static \(\SU\)-covariant channel
 family and its diagonal action on irreducible tensor sectors
@@ -242,6 +250,14 @@ uniformly continuous covariant quantum Markov semigroups are given in
 representation-theoretic settings provide context for the finite-dimensional
 single-spin specialization considered here.
 
+Recent work on Weyl dynamical
+maps gives semigroup and non-Markovianity criteria in a different
+covariant family \cite[Proposition~2]{XuJagadish2026}.
+In the same Weyl-covariant setting, Shahbeigi, Amaro-Alcal{\'a},
+Pucha{\l}a, and \.{Z}yczkowski describe the log-convex geometry and
+volume of accessible channels
+\cite[Corollary~4, Sec.~IV, and Eq.~(68)]{ShahbeigiEtAl2021}.
+
 For time-dependent evolutions, the distinction between semigroup
 embeddability and divisibility is developed in
 \cite[Secs.~2--4]{WolfCirac2008} and \cite[Sec.~3]{DavalosZimanPineda2019}.
@@ -253,44 +269,14 @@ identity-normalized dynamical maps.  Definition~\ref{def:cp-divisibility}
 also permits channel families without a distinguished identity initial
 channel; the distinction is stated explicitly there.
 
-Here the symmetry is imposed on the continuous-time generator as well
-as on its endpoint.  Thus ``embeddable'' below means embeddable by an
-\(\SU\)-covariant GKSL generator; no assertion is made about a
-noncovariant logarithm of the same endpoint.  The argument uses three
-known inputs, which we restate and verify in the normalization of this
-paper:
-\begin{enumerate}
- \item the covariant channels form a simplex whose vertices act
- diagonally on irreducible tensor sectors;
- \item every covariant generator is a unique nonnegative combination
- of tensor-rank dissipators; and
- \item the multipole interaction strengths and relaxation rates are
- related by mutually inverse Wigner \(6j\) transforms.
-\end{enumerate}
-In these coordinates, the endpoint consequences are:
-\begin{enumerate}
- \item positivity of all sector eigenvalues together with
- \((M^{(j)})^{-1}\log\bm\eta\geq0\) is necessary and sufficient for
- covariant endpoint embeddability;
- \item the inverse-rate inequalities become explicit logarithmic-cone
- facets, listed through spin \(2\); and
- \item along identity-normalized invertible differentiable covariant
- channel families, the same cone applied to
- \(d(\log\bm\eta(t))/dt\) characterizes CP-divisibility.  For the broader
- nonidentity-normalized class in Definition~\ref{def:cp-divisibility},
- the corresponding statement uses \(d(\log|\bm\eta(t)|)/dt\).
-\end{enumerate}
-The results derived here beyond the three cited inputs are the logarithmic
-endpoint formulation and its low-spin facets, the determinant-magnitude
-identity \(\lvert\det M^{(j)}\rvert=2j+1\), exact Euclidean volumes of the
-embeddable regions, exact low-spin comparison polytopes, and the
-instantaneous channel-family criterion.  This description separates source
-provenance from any claim of historical priority for consequences implicit
-in the earlier rate formulas.  All
-displayed low-spin matrices and polytope intersections have symbolic
-certificates.  Floating-point values are used only to render the
-spin-\(1\) boundary curves and spin-\(3/2\) boundary meshes whose defining
-equations are exact.
+The paper uses a single Hilbert--Schmidt normalization throughout.
+Sections~2--4 develop the tensor conventions, covariant generators, and
+Wigner \(6j\) eigenvalue matrix and its inverse.  Section~5 gives the
+endpoint criterion and low-spin inequalities.  Section~6 compares the
+channel regions and derives the general volume formula; Section~7 treats
+CP-divisible families.  Section~8 describes the exact reconstruction and
+geometry certificates.  Floating-point data are used only for rendering
+the curves, boundary meshes, and interior samples.
 
 \section{Tensor conventions and covariant channels}
 
@@ -1197,7 +1183,9 @@ Exponentiation gives
 \eqref{eq:spin-two-multiplicative-two}.
 \end{proof}
 
-\section{Low-spin channel geometry}
+\section{Channel geometry and exact volumes}
+
+\subsection{Low-spin channel polytopes}
 
 \begin{proposition}[Low-spin complete-positivity facets]
 \label{prop:low-spin-cp-facets}
@@ -1327,6 +1315,8 @@ corresponding barycentric coordinates.  Every other full-rank selection
 is either singular or violates at least one of the halfspaces.
 \end{proof}
 
+\subsection{Embeddable volume for arbitrary spin}
+
 \begin{proposition}[Euclidean volume of the embeddable region]
 \label{prop:embeddable-volume}
 Let \(n=2j\), let \(\mathsf M_j\subset\mathbb R^n\) be the set of
@@ -1443,6 +1433,30 @@ face in \eqref{eq:spin-three-positive-polytope} from an interior point
 gives \(25/126\); the rational active-set script records the same
 determinant sum.  Division gives the four stated fractions.
 \end{proof}
+
+\subsection{Volume comparisons and figures}
+
+Table~\ref{tab:volume-comparison} collects the low-spin volumes and
+fractions from Proposition~\ref{prop:embeddable-volume}.  All volumes use
+Lebesgue measure in the sector-eigenvalue coordinates.
+\begin{center}
+\begin{minipage}{\textwidth}
+\centering\small
+\begin{tabular}{c c c c c c}
+\hline
+Spin & Full simplex & Nonnegative & Embeddable
+ & \multicolumn{2}{c}{Embeddable fraction of}\\
+ & \(\mathsf S_j\) & \(\mathsf S_j^+\) & \(\mathsf M_j\)
+ & \(\mathsf S_j\) & \(\mathsf S_j^+\)\\ \hline
+\(1\) & \(9/10\) & \(8/15\) & \(3/8\) & \(5/12\) & \(45/64\)\\
+\(3/2\) & \(128/315\) & \(25/126\) & \(1/12\) & \(105/512\) & \(21/50\)\\ \hline
+\end{tabular}
+\captionsetup{hypcap=false}
+\captionof{table}{Exact volumes and embeddable fractions for spins
+\(1\) and \(3/2\).}
+\label{tab:volume-comparison}
+\end{minipage}
+\end{center}
 
 Figure~\ref{fig:spin-one-regions} and
 Figures~\ref{fig:spin-three-halves-polytopes}--\ref{fig:spin-three-halves-regions}
@@ -1730,8 +1744,8 @@ The symbolic calculation compares two algebraically distinct
 constructions: the Wigner \(6j\) formula \eqref{eq:M-definition} and
 direct matrix operations on the tensors in
 \eqref{eq:tensor-definition}.  This separation makes the phase and
-normalization checks observable rather than folding them into a single
-table lookup; it is not a claim of independent software implementations.
+normalization checks explicit.  Both constructions use SymPy; its
+Clebsch--Gordan, \(3j\), and \(6j\) routines share library infrastructure.
 
 \begin{remark}[Exact reconstruction protocol]
 For \(2j=1,2,3,4\), the repository's exact-cone script performs all of
@@ -1762,19 +1776,12 @@ The primitive integer rows printed by the script are exactly the facet
 normals in the spin-\(1\), spin-\(3/2\), and spin-\(2\) corollaries.
 The tensor and Wigner routines return SymPy algebraic numbers
 \cite{MeurerEtAl2017}, and the tests use exact matrix equality after
-symbolic simplification.  The
-direct Kraus reconstruction does not call the \(6j\)-based generator
-routine.  For every \((\ell,m,k)\), it checks the complete matrix
-residual and then compares the scalar with \eqref{eq:M-definition}.
-The Choi matrix-unit loop is separate from its vectorized-projector
-construction.  Thus items 1--4 compare distinct formula paths entry by
-entry; item 5 substitutes the resulting matrices into the displayed
-algebraic identities.  The Clebsch--Gordan, \(3j\), and \(6j\) entry
-points all belong to SymPy's Wigner module, so shared library
-infrastructure is recorded rather than treated as an independent
-implementation.  The executable check is
+symbolic simplification.  The direct Kraus reconstruction does not call
+the \(6j\)-based generator routine, and the Choi matrix-unit loop is
+separate from the vectorized-projector construction.  The executable
+check, run from the repository root, is
 \begin{center}
- \texttt{python3 -u code/exact\_cones.py 1 2 3 4 --verify}.
+ \verb|python3 -u code/exact_cones.py 1 2 3 4 --verify|
 \end{center}
 \end{remark}
 
@@ -1805,28 +1812,23 @@ Proposition~\ref{prop:comparison-polytopes}.
 From the repository root, \texttt{make check} runs the exact tensor
 audit, \texttt{make figures} regenerates all plot data and certificates,
 and \texttt{make paper} rebuilds the figures, bibliography, and paper.
-Both Python entry points accept \texttt{-h} and \texttt{--help} and exit
+Both Python entry points accept \verb|-h| and \verb|--help| and exit
 without generating or changing artifacts.
 
 \section{Conclusion}
 
-For a fixed irreducible spin, the classical isotropic-spin
-generator--relaxation-rate transform takes a particularly transparent
-form in the present Hilbert--Schmidt normalization: covariance converts
-the canonical GKS matrix into one nonnegative rate per nonzero tensor
-rank, and the Racah transform converts those rates to sector decay
-exponents by \(M^{(j)}\).  Its orthogonality gives the inverse
-\eqref{eq:M-inverse-formula}, while the additional determinant-magnitude
-identity and componentwise exponential turn this rate cone into an
-endpoint criterion.  For identity-normalized channel families,
-time-dependent CP-divisibility is the pointwise version of the same test
-applied to the logarithmic derivatives of the sector eigenvalues.  For the broader
-nonidentity-normalized class in Definition~\ref{def:cp-divisibility}, the
-signs are constant and the criterion uses componentwise absolute values.
-The
-low-spin corollaries and comparison plots distinguish complete
-positivity, sectorwise nonnegativity, and covariant Markovian
-embeddability.
+The classical isotropic-spin generator and relaxation-rate transform
+provides an explicit endpoint test in channel eigenvalues: positivity of
+the spectrum and membership of its logarithm in the generator cone.
+The determinant identity \(\lvert\det M^{(j)}\rvert=2j+1\) and the
+column sums of this transform give the exact embeddable-region volume
+\((2j+1)/(2^{2j}(2j)!)\) in sector-eigenvalue coordinates.
+The low-spin inequalities, volume comparisons, and plots distinguish
+complete positivity, nonnegative sector spectrum, and covariant
+semigroup embeddability.  For invertible differentiable families starting
+at the identity, CP-divisibility is characterized by the same cone
+applied to instantaneous logarithmic derivatives; Theorem~\ref{thm:path-criterion}
+also covers families without an identity initial channel.
 
 \section*{AI-use disclosure}
 
@@ -1844,10 +1846,10 @@ computation, and passage of text.
 The source, exact verification scripts, generated rational certificates,
 plotting data, and build instructions are available in the
 \href{https://github.com/skypher/su2-markovian-embeddability}{project
-repository}.  The earlier review snapshot is archived under the
-\href{https://github.com/skypher/su2-markovian-embeddability/tree/v1.1.0}
-{\texttt{v1.1.0} tag}; subsequent revisions are identified by their
-repository commits.  Machine-readable citation
+repository}.  The source and artifacts corresponding to this submission
+are archived under the
+\href{https://github.com/skypher/su2-markovian-embeddability/tree/v1.2.0}
+{\texttt{v1.2.0} tag}.  Machine-readable citation
 metadata and the
 repository reuse terms are recorded in \texttt{CITATION.cff} and
 \texttt{LICENSE}, respectively.

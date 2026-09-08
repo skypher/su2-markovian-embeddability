@@ -6,8 +6,8 @@ title: >-
   Exact artifacts for embedding SU(2)-covariant spin channels into covariant
   quantum Markov semigroups
 type: software
-version: 1.1.0
-date-released: 2026-09-03
+version: 1.2.0
+date-released: 2026-09-08
 authors:
   - family-names: Polzer
     given-names: Leslie P.
@@ -24,4 +24,4 @@ preferred-citation:
     Embedding SU(2)-covariant spin channels into SU(2)-covariant quantum
     Markov semigroups
   year: 2026
-  url: https://github.com/skypher/su2-markovian-embeddability/tree/v1.1.0
+  url: https://github.com/skypher/su2-markovian-embeddability/tree/v1.2.0

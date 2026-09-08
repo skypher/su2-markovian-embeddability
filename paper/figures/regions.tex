@@ -147,99 +147,103 @@ Every vertex is marked; the identity vertex is starred.}
 \label{fig:spin-three-halves-polytopes}
 \end{figure}
 
-\begin{figure}[p]
-\centering
-\begin{minipage}[t]{0.86\textwidth}
+% Shared axes keep the four views directly comparable.
+\pgfplotsset{embeddable panel/.style={
+  width=\linewidth, height=0.92\linewidth,
+  view={125}{22},
+  xlabel={\(\eta_1\)}, ylabel={\(\eta_2\)}, zlabel={\(\eta_3\)},
+  xmin=0,xmax=1.05,ymin=0,ymax=1.05,zmin=0,zmax=1.05,
+  xtick={0,0.5,1},ytick={0,0.5,1},ztick={0,0.5,1},
+  tick label style={font=\scriptsize},label style={font=\small},
+}}
+\newcommand{\boundarypanel}[3]{%
+\begin{minipage}[t]{0.48\textwidth}
 \centering
 \begin{tikzpicture}
-\begin{axis}[
-  width=0.96\linewidth,
-  height=0.76\linewidth,
-  view={125}{22},
-  xlabel={\(\eta_1\)},
-  ylabel={\(\eta_2\)},
-  zlabel={\(\eta_3\)},
-  xmin=0,xmax=1.05,
-  ymin=0,ymax=1.05,
-  zmin=0,zmax=1.05,
-  xtick={0,0.5,1},
-  ytick={0,0.5,1},
-  ztick={0,0.5,1},
-  tick label style={font=\footnotesize},
-  legend style={
-    at={(0.5,1.13)},anchor=south,
-    draw=none,fill=none,
-    font=\scriptsize,legend columns=2,
-  },
-  legend cell align=left,
-]
-\input{generated/spin3_positive_faces.tex}
-\addplot3[
-  only marks,
-  mark=*,
-  mark size=0.32pt,
-  color=cbBlue,
-  opacity=0.16,
-] table {generated/spin3_markov_interior.dat};
-\addlegendentry{sampled embeddable interior}
-\addplot3[
-  mesh,
-  draw=cbBlue,
-  opacity=0.82,
-  line width=0.3pt,
-  mesh/rows=25,
-] table {generated/spin3_markov_face_1.dat};
-\addlegendentry{boundary \(r_1=0\)}
-\addplot3[
-  no marks,densely dotted,draw=black!55,line width=0.9pt,
-  unbounded coords=jump,forget plot,
-] table {generated/spin3_markov_face_1_cutoff.dat};
-\addplot3[
-  mesh,
-  draw=cbGreen!85!black,
-  densely dashed,
-  opacity=0.82,
-  line width=0.3pt,
-  mesh/rows=25,
-] table {generated/spin3_markov_face_2.dat};
-\addlegendentry{boundary \(r_2=0\)}
-\addplot3[
-  no marks,densely dotted,draw=black!55,line width=0.9pt,
-  unbounded coords=jump,forget plot,
-] table {generated/spin3_markov_face_2_cutoff.dat};
-\addplot3[
-  mesh,
-  draw=cbPurple!90!black,
-  dash dot,
-  opacity=0.82,
-  line width=0.3pt,
-  mesh/rows=25,
-] table {generated/spin3_markov_face_3.dat};
-\addlegendentry{boundary \(r_3=0\)}
-\addplot3[
-  no marks,densely dotted,draw=black!55,line width=0.9pt,
-  unbounded coords=jump,forget plot,
-] table {generated/spin3_markov_face_3_cutoff.dat};
-\addplot3[
-  only marks,mark=*,mark size=1.5pt,
-  mark options={draw=black,fill=black},
-] coordinates {(0.367879441171,0.367879441171,0.367879441171)};
-\addlegendentry{reference interior point}
-\addplot3[only marks,mark=*,mark size=0.9pt] coordinates {(1,1,1)};
+\begin{axis}[embeddable panel]
+\addplot3[mesh,draw=#2,line width=0.45pt,mesh/rows=25]
+  table {generated/spin3_markov_face_#1.dat};
+\addplot3[no marks,densely dotted,draw=black!60,line width=0.9pt,
+  unbounded coords=jump]
+  table {generated/spin3_markov_face_#1_cutoff.dat};
+\addplot3[only marks,mark=*,mark size=1.2pt]
+  coordinates {(1,1,1)};
 \end{axis}
 \end{tikzpicture}
+\small (#3) boundary \(r_{#1}=0\)
+\end{minipage}}
 
-\end{minipage}
-\caption{Spin \(3/2\) embeddable geometry.  The translucent blue point cloud
-samples strictly positive canonical rates and makes visible the common
-feasible side of the three boundary meshes.  The meshes are overlaid on the
-orange nonnegative-spectrum polytope and are distinguished by color and line
-style; each label names the canonical rate set to zero.  The marked diagonal
-point is \(e^{-1}(1,1,1)\).  The exact region is defined by
+\begin{figure}[p]
+\centering
+\begin{minipage}[t]{0.48\textwidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[embeddable panel]
+\addplot3[draw=black!30,fill=none,line width=0.4pt,forget plot] coordinates {
+  (0,0,0.238095238095)
+  (0,0.5,0.357142857143)
+  (1,1,1)
+  (0.5,0,0.5)
+} \closedcycle;
+\addplot3[draw=black!30,fill=none,line width=0.4pt,forget plot] coordinates {
+  (0,0.333333333333,0)
+  (0.833333333333,0.5,0)
+  (1,1,1)
+  (0,0.5,0.357142857143)
+} \closedcycle;
+\addplot3[draw=black!30,fill=none,line width=0.4pt,forget plot] coordinates {
+  (0.5,0,0.5)
+  (1,1,1)
+  (0.833333333333,0.5,0)
+  (0.555555555556,0,0)
+} \closedcycle;
+\addplot3[draw=black!30,fill=none,line width=0.4pt,forget plot] coordinates {
+  (0,0,0)
+  (0,0.333333333333,0)
+  (0,0.5,0.357142857143)
+  (0,0,0.238095238095)
+} \closedcycle;
+\addplot3[draw=black!30,fill=none,line width=0.4pt,forget plot] coordinates {
+  (0,0,0)
+  (0,0,0.238095238095)
+  (0.5,0,0.5)
+  (0.555555555556,0,0)
+} \closedcycle;
+\addplot3[draw=black!30,fill=none,line width=0.4pt,forget plot] coordinates {
+  (0,0,0)
+  (0.555555555556,0,0)
+  (0.833333333333,0.5,0)
+  (0,0.333333333333,0)
+} \closedcycle;
+\addplot3[only marks,mark=*,mark size=0.5pt,color=cbBlue,opacity=0.5]
+  table {generated/spin3_markov_interior.dat};
+\addplot3[mesh,draw=cbBlue,line width=0.3pt,mesh/rows=25]
+  table {generated/spin3_markov_face_1.dat};
+\addplot3[mesh,draw=cbGreen!85!black,line width=0.3pt,mesh/rows=25]
+  table {generated/spin3_markov_face_2.dat};
+\addplot3[mesh,draw=cbPurple!90!black,line width=0.3pt,mesh/rows=25]
+  table {generated/spin3_markov_face_3.dat};
+\addplot3[only marks,mark=*,mark size=1.5pt]
+  coordinates {(0.367879441171,0.367879441171,0.367879441171)};
+\end{axis}
+\end{tikzpicture}
+\small (a) combined overview
+\end{minipage}\hfill
+\boundarypanel{1}{cbBlue}{b}
+\par\bigskip
+\boundarypanel{2}{cbGreen!85!black}{c}\hfill
+\boundarypanel{3}{cbPurple!90!black}{d}
+\caption{Spin \(3/2\) embeddable geometry, with identical axes and viewing
+angles in all panels.  Panel (a) shows the three boundary meshes and
+sampled embeddable interior inside the faint nonnegative-spectrum polytope;
+the black point is \(e^{-1}(1,1,1)\).  Panels (b)--(d) separate the
+surfaces by the canonical rate set to zero, with the identity marked.
+The exact region is defined by
 inequalities \eqref{eq:spin-three-halves-facet-one}--
-\eqref{eq:spin-three-halves-facet-three}.  For rendering, the two free
-rates on each mesh range over \([0,8]\); the gray dotted edges are sampling
-cutoffs, and the point cloud is sampled data; neither is part of the
-mathematical boundary.}
+\eqref{eq:spin-three-halves-facet-three}.
+Each mesh samples the two free integrated rates over \([0,8]\).
+Gray dotted edges in panels (b)--(d) mark rendering cutoffs, not additional
+mathematical boundaries.  Interior dots are samples, not a description
+of the full region.}
 \label{fig:spin-three-halves-regions}
 \end{figure}
